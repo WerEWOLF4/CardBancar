@@ -390,8 +390,9 @@ input[type="text" i] {
 .card-input__input.-select {
   padding-right: 30px;
 }
-.card-form__group .card-input__input:last-child {
-  margin-right: 0;
+.card-form__group .card-input__input {
+  flex: 1;
+  margin-right: 15px;
 }
 .card-form__col.-cvv {
   max-width: 150px;
