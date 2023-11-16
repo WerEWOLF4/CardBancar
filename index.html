@@ -1,3 +1,4 @@
+Nichita Melnic, [16.11.2023 17:28]
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,38 +11,71 @@
 
 <div class="wrapper" id="app">
   <div class="card-form">
+
     <div class="card-list">
       <div class="card-item" id="cardItem">
         <div class="card-item__side -front">
-          <div class="card-item__cover"></div>
+            <div class="card-item__focus"></div>
+          <div class="card-item__cover">
+            <img src="1-fon.jpeg" alt="front-card" class="card-item__bg">
+          </div>
           <div class="card-item__wrapper">
             <div class="card-item__top">
-              <img src="chip.png" class="card-item__chip" alt="Chip">
               <div class="card-item__type">
-                <img src="card-type.png" alt="Card Type" class="card-item__typeImg" id="cardTypeImg">
+                <img src="visa.png" alt="Card Type" class="card-item__typeImg" id="cardTypeImg">
               </div>
             </div>
+
             <label for="cardNumber" class="card-item__number" id="cardNumberLabel">
-              <span class="card-item__numberItem" id="cardNumberDigits"></span>
+              <span class="card-item__numberItem">#</span>
+              <span class="card-item__numberItem">#</span>
+              <span class="card-item__numberItem">#</span>
+              <span class="card-item__numberItem">#</span>
+              <span class="card-item__numberItem"></span>
+              <span class="card-item__numberItem">#</span>
+              <span class="card-item__numberItem">#</span>
+              <span class="card-item__numberItem">#</span>
+              <span class="card-item__numberItem">#</span>
+              <span class="card-item__numberItem"></span>
+              <span class="card-item__numberItem">#</span>
+              <span class="card-item__numberItem">#</span>
+              <span class="card-item__numberItem">#</span>
+              <span class="card-item__numberItem">#</span>
+              <span class="card-item__numberItem"></span>
+              <span class="card-item__numberItem">#</span>
+              <span class="card-item__numberItem">#</span>
+              <span class="card-item__numberItem">#</span>
+              <span class="card-item__numberItem">#</span>
             </label>
+
             <div class="card-item__content">
-              <label for="cardHolder" class="card-item__info" id="cardHolderLabel">Card Holder</label>
-              <div class="card-item__holder" id="cardHolder">Full Name</div>
+              <label for="cardHolder" class="card-item__info">
+                <div class="card-item__holder">Card Holder</div>
+              <div class="card-item__name">Full Name</div>
+            </label>
+
               <div class="card-item__date" id="cardDate">
                 <label for="cardMonth" class="card-item__dateTitle">Expires</label>
-                <span class="card-item__dateItem" id="cardMonth">MM</span>/<span class="card-item__dateItem" id="cardYear">YY</span>
+                <label for="cardMonth" class="card-item__dateItem"><span>MM</span></label>/<label for="cardYear" class="card-item__dateItem"><span>YY</span></label>
               </div>
             </div>
           </div>
         </div>
+
         <div class="card-item__side -back">
-          <div class="card-item__cover"></div>
+          <div class="card-item__cover">
+            <img src="1-fon.jpeg" alt="back-ground" class="card-item__bg">
+          </div>
           <div class="card-item__band" id="cardBand"></div>
           <div class="card-item__cvv">
             <div class="card-item__cvvTitle">CVV</div>
-            <div class="card-item__cvvBand" id="cardCvvBand"></div>
+            <div class="card-item__cvvBand"></div>
+            <div class="card-item__type">
+                <img src="visa.png" alt="visa" class="card-item__typeImg">
+            </div>
           </div>
         </div>
+        
       </div>
     </div>
     <div class="card-form__inner">
@@ -53,18 +87,52 @@
         <label for="cardHolder" class="card-input__label">Card Holder</label>
         <input type="text" id="cardHolder" class="card-input__input" maxlength="25" autocomplete="off">
       </div>
-      <div class="card-input card-input--half">
+
+Nichita Melnic, [16.11.2023 17:28]
+<div class="card-form__row">
+      <div class="card-form__col">
+      <div class="card-form__group">
         <label for="cardMonth" class="card-input__label">Expiration Date</label>
-        <input type="text" id="cardMonth" class="card-input__input" placeholder="MM" maxlength="2" autocomplete="off">
-        <input type="text" id="cardYear" class="card-input__input" placeholder="YY" maxlength="2" autocomplete="off">
-      </div>
-      <div class="card-input card-input--half">
-        <label for="cardCvv" class="card-input__label">CVV</label>
-        <input type="text" id="cardCvv" class="card-input__input" maxlength="3" autocomplete="off">
-      </div>
-      <button class="card-form__button" onclick="rotateCard()">Submit</button>
+        <select id="cardMonth" data-ref="cardDate" class="card-input__input -select"><option value="" disabled="disabled" selected="selected">Month</option> 
+        <option value="01">01</option>
+        <option value="02">02</option>
+        <option value="03">03</option>
+        <option value="04">04</option>
+        <option value="05">05</option>
+        <option value="06">06</option>
+        <option value="07">07</option>
+        <option value="08">08</option>
+        <option value="09">09</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select>
+
+    <select id="cardYear" data-ref="cardDate" class="card-input__input -select"><option value="" disabled="disabled" selected="selected">Year</option> 
+    <option value="2023">2023</option>
+    <option value="2024">2024</option>
+    <option value="2025">2025</option>
+    <option value="2026">2026</option>
+    <option value="2027">2027</option>
+    <option value="2028">2028</option>
+    <option value="2029">2029</option>
+    <option value="2030">2030</option>
+    <option value="2031">2031</option>
+    <option value="2032">2032</option>
+    <option value="2033">2033</option>
+    <option value="2034">2034</option>
+</select>
+
     </div>
-  </div>
+   </div>
+<div class="card-form__col -cvv">
+    <div class="card-input">
+        <label for="cardCvv" class="card-input__label">CVV</label>
+        <input type="text" id="cardCvv" maxlength="4" autocomplete="off" class="card-input__input">
+    </div>
+    </div>
+</div>
+      <button class="card-form__button" onclick="rotateCard()">Submit</button>
 </div>
 
 <script src="script.js"></script>
