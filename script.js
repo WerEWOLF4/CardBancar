@@ -87,3 +87,21 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 });
+
+const cardBack = document.getElementById('cardBack');
+const cardCvv = document.getElementById('cardCvv');
+
+const rotateCardBack = (cvv) => {
+ 
+  if (cvv.trim() !== '') {
+    
+    cardBack.style.transform = 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
+  } else {
+   
+    cardBack.style.transform = 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
+  }
+}
+
+cardCvv.addEventListener('input', () => {
+  rotateCardBack(cardCvv.value);
+});
