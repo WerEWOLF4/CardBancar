@@ -11,10 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitButton = document.querySelector('.card-form__button');
   const cardItemBack = document.querySelector('.card-item__side.-back');
   const cardTypeImgBack = cardItemBack.querySelector('.card-item__typeImg');
+  const cardTypeImg = document.querySelector('.card-item__typeImg');
+
+  const visaRegex = /^4/;
+  const mastercardRegex = /^5[1-5]/;
 
   cardNumberInput.addEventListener('input', () => {
     updateCardNumberLabel();
-    updateCardType();
+    //updateCardType();
+    //still in development
   });
 
   cardHolderInput.addEventListener('input', () => {
@@ -51,22 +56,25 @@ document.addEventListener('DOMContentLoaded', () => {
     cardHolder.textContent = cardHolderValue || 'Full Name';
   };
 
-  const updateCardDate = () => {
+const updateCardDate = () => {
   const monthValue = cardMonthInput.value;
   const yearValue = cardYearInput.value.slice(-2);
   const isValidMonth = /^\d{2}$/.test(monthValue) && parseInt(monthValue, 10) >= 1 && parseInt(monthValue, 10) <= 12;
-
   const isValidYear = /^\d{2}$/.test(yearValue);
+  const deleteYY = document.querySelector('.deleteYY');
 
   if (isValidMonth && isValidYear) {
-    const expirationDate = `${monthValue} / ${yearValue}`;
-    const cardDateItem = cardDate.querySelector('.card-item__dateItem');
-    cardDateItem.textContent = expirationDate;
-  } else console.log('Invalid date input');
+    const cardDateItem = cardDate.querySelector('.card-item__dateItem span');
+    cardDateItem.textContent = `${monthValue}/${yearValue}`;
+    deleteYY.textContent = '';
+    
+  } else {
+    console.log('Invalid date input');
+  }
 };
 
     const updateCardTypeBack = () => {
-      cardTypeImgBack.src = 'img/mastercard.png';
+      cardTypeImgBack.src = "img/amex.png";
     };
 
   const updateCvvBandBack = () => {
@@ -86,8 +94,15 @@ document.addEventListener('DOMContentLoaded', () => {
       updateCvvBandBack(); 
     };
 
+  //still in development
+  if(cardNumberInput === visaRegex) {
+    cardTypeImg.src = "img/mastercard.png";
+  } else if (mastercardRegex.test(cardNumberInput.value)) {
+    cardTypeImg.src = "img/mastercard.png";
+  } else {
+    cardTypeImg.src = "img/visa.png";
+  }
 });
-
 
 const cardBack = document.getElementById('cardBack');
 const cardCvv = document.getElementById('cardCvv');
@@ -95,12 +110,9 @@ const cardCvv = document.getElementById('cardCvv');
 const rotateCardBack = (cvv) => {
  
   if (cvv.trim() !== '') {
-    
     cardBack.style.transform = 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
-
   } else {
     cardBack.style.transform = 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
-  
   }
 }
 
@@ -109,9 +121,7 @@ cardCvv.addEventListener('input', () => {
 });
 
 const updateCvvBand = () => {
-  
   let cvvInput = document.getElementById("cardCvv").value;
-
 
   let cvvBandText = document.getElementById("cvvBandValue");
   cvvBandText.textContent = cvvInput;
