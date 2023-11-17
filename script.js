@@ -105,3 +105,15 @@ const rotateCardBack = (cvv) => {
 cardCvv.addEventListener('input', () => {
   rotateCardBack(cardCvv.value);
 });
+
+const updateCvvBand = () => {
+  
+  let cvvInput = document.getElementById("cardCvv").value;
+
+
+  let cvvBandText = document.getElementById("cvvBandValue");
+  cvvBandText.textContent = cvvInput;
+}
+
+let cardCvvInput = document.getElementById("cardCvv");
+cardCvvInput.addEventListener("input", updateCvvBand ());
