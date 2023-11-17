@@ -65,7 +65,7 @@ const updateCardDate = () => {
 
   if (isValidMonth && isValidYear) {
     const cardDateItem = cardDate.querySelector('.card-item__dateItem span');
-    cardDateItem.textContent = `${monthValue}/${yearValue}`;
+    cardDateItem.textContent = `${monthValue} ${yearValue}`;
     deleteYY.textContent = '';
     
   } else {
