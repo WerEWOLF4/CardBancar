@@ -12,9 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardItemBack = document.querySelector('.card-item__side.-back');
   const cardTypeImgBack = cardItemBack.querySelector('.card-item__typeImg');
   const cardTypeImg = document.querySelector('.card-item__typeImg');
-  const cardItemNumber = document.querySelector('.card-item__number');
+  const cardItemNumber = document.querySelector('#Numbers');
   const cardItemInfo = document.querySelector('.card-item__info');
   const cardItemData = document.querySelector('.card-item__date');
+
 
   const visaRegex = /^4/;
   const mastercardRegex = /^5[1-5]/;
