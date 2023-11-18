@@ -142,6 +142,7 @@ const updateCardDate = () => {
 
 const cardBack = document.getElementById('cardBack');
 const cardCvv = document.getElementById('cardCvv');
+const cardFront = document.getElementById("card-item__side__front");
 
 const rotateCardBack = (cvv) => {
   const cardNumberInput = document.getElementById('cardNumber');
@@ -151,8 +152,12 @@ const rotateCardBack = (cvv) => {
 
   if (cvv.trim() !== '') {
     cardBack.style.transform = 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
+    cardFront.style.transform = 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
+
   } else {
     cardBack.style.transform = 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
+    cardFront.style.transform = 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
+
   }
 
  [cardNumberInput, cardHolderInput, cardMonthInput, cardYearInput].forEach(inputField => {
@@ -161,9 +166,14 @@ const rotateCardBack = (cvv) => {
     const hasInput = [cardNumberInput, cardHolderInput, cardMonthInput, cardYearInput]
       .some(input => input.value.trim() !== '');
 
-    cardBack.style.transform = hasInput
+      cardBack.style.transform = hasInput
       ? 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)'
       : 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
+
+    cardFront.style.transform = hasInput
+      ? 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)'
+      : 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
+
   });
 });
 }
