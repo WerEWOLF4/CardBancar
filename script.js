@@ -137,15 +137,16 @@ cardCvv.addEventListener('input', () => {
 });
 
 const updateCvvBand = () => {
-  let cvvInput = document.getElementById("cardCvv").value;
+  let cvvInput = cardCvv.value;
+
+
+  let maskedCvv = cvvInput.replace(/./g, '*');
 
   let cvvBandText = document.getElementById("cvvBandValue");
-  cvvBandText.textContent = cvvInput;
+  cvvBandText.textContent = maskedCvv;
 }
 
-let cardCvvInput = document.getElementById("cardCvv");
-cardCvvInput.addEventListener("input", updateCvvBand ());
-
+cardCvv.addEventListener("input", updateCvvBand);
 
 
 let imageSources = [
