@@ -108,12 +108,28 @@ const cardBack = document.getElementById('cardBack');
 const cardCvv = document.getElementById('cardCvv');
 
 const rotateCardBack = (cvv) => {
- 
+  const cardNumberInput = document.getElementById('cardNumber');
+  const cardHolderInput = document.getElementById('cardHolder');
+  const cardMonthInput = document.getElementById('cardMonth');
+  const cardYearInput = document.getElementById('cardYear');
+
   if (cvv.trim() !== '') {
     cardBack.style.transform = 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
   } else {
     cardBack.style.transform = 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
   }
+
+ [cardNumberInput, cardHolderInput, cardMonthInput, cardYearInput].forEach(inputField => {
+  inputField.addEventListener('input', () => {
+   
+    const hasInput = [cardNumberInput, cardHolderInput, cardMonthInput, cardYearInput]
+      .some(input => input.value.trim() !== '');
+
+    cardBack.style.transform = hasInput
+      ? 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)'
+      : 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
+  });
+});
 }
 
 cardCvv.addEventListener('input', () => {
