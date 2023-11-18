@@ -190,6 +190,12 @@ cardCvv.addEventListener("blur", () => {
 
 })
 
+cardCvv.addEventListener("focus", () => {
+  cardBack.style.transform = 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
+  cardFront.style.transform = 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
+
+})
+
 const updateCvvBand = () => {
   let cvvInput = cardCvv.value;
 
