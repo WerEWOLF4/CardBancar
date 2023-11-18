@@ -1,7 +1,7 @@
 body {
   background: #ddeefc;
   font-family: "Source Sans Pro", sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   overflow: hidden;
 }
 
@@ -141,15 +141,19 @@ body {
   font-weight: 500;
   line-height: 1;
   color: #fff;
-  font-size: 27px;
+  font-size: 25px;
   margin-bottom: 35px;
   display: inline-block;
-  padding: 10px 15px;
+  padding: 10px;
+  padding-left: 35px;
+  padding-right: 47px;
   cursor: pointer;
+  border: solid 1px white;
+  border-radius: 10px;
 }
 
 .card-item__numberItem {
-  width: 5px;
+  width: 1px;
   display: inline-block;
 }
 
@@ -166,11 +170,13 @@ body {
 .card-item__info {
   color: #fff;
   width: 100%;
-  max-width: calc(100% - 85px);
+  max-width: calc(100% - 75px);
   padding: 10px 15px;
   font-weight: 500;
   display: block;
   cursor: pointer;
+  border: solid 1px white;
+  border-radius: 10px;
 }
 
 .card-item__holder {
@@ -193,12 +199,16 @@ body {
   flex-wrap: wrap;
   font-size: 18px;
   margin-left: auto;
-  padding: 10px;
+  padding: 5px;
+  padding-bottom: 1px;
+  margin: 10px;
   display: inline-flex;
-  width: 80px;
+  /* width: 80px; */
   white-space: nowrap;
   flex-shrink: 0;
   cursor: pointer;
+  border: solid 1px white;
+  border-radius: 10px;
 }
 
 .card-item__dateTitle {
