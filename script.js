@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   cardNumberInput.addEventListener('input', () => {
     updateCardNumberLabel();
-  
     //updateCardType();
     //still in development
   });
@@ -29,42 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   cardHolderInput.addEventListener('input', () => {
     updateCardHolder();
-   
   });
 
   cardMonthInput.addEventListener('input', () => {
     updateCardDate();
-   
-
   });
 
-  cardNumberInput.addEventListener('focus', () => {
-    cardItemNumber.classList.add('bordered');
-  });
-  
-  cardHolderInput.addEventListener('focus', () => {
-    cardItemInfo.classList.add('bordered');
-  });
-  
-  cardMonthInput.addEventListener('focus', () => {
-    cardItemData.classList.add('bordered');
-  });
-  
- 
-  cardNumberInput.addEventListener('blur', () => {
-      cardItemNumber.classList.remove('bordered');
-    
-  });
-  
-  cardHolderInput.addEventListener('blur', () => {
-      cardItemInfo.classList.remove('bordered');
-   
-  });
-  
-  cardMonthInput.addEventListener('blur', () => {
-      cardItemData.classList.remove('bordered');
-    
-  });
+  cardNumberInput.addEventListener('focus', () => {cardItemNumber.classList.add('bordered');});
+  cardHolderInput.addEventListener('focus', () => {cardItemInfo.classList.add('bordered');});
+  cardMonthInput.addEventListener('focus', () => {cardItemData.classList.add('bordered');});
+  cardNumberInput.addEventListener('blur', () => {cardItemNumber.classList.remove('bordered');});
+  cardHolderInput.addEventListener('blur', () => {cardItemInfo.classList.remove('bordered');});
+  cardMonthInput.addEventListener('blur', () => {cardItemData.classList.remove('bordered');});
 
   cardYearInput.addEventListener('input', () => {
     updateCardDate();
@@ -123,12 +98,12 @@ const updateCardDate = () => {
     return value.replace(/(\d{4})/g, '$1 ').trim();
   };
 
- const toggleCardSide = () => {
-      cardItem.classList.toggle('card-item__side--front');
-      cardItem.classList.toggle('card-item__side--back');
-      updateCardTypeBack(); 
-      updateCvvBandBack(); 
-    };
+  const toggleCardSide = () => {
+    cardItem.classList.toggle('card-item__side--front');
+    cardItem.classList.toggle('card-item__side--back');
+    updateCardTypeBack(); 
+    updateCvvBandBack(); 
+  };
 
   //still in development
   if(cardNumberInput === visaRegex) {
@@ -150,34 +125,24 @@ const rotateCardBack = (cvv) => {
   const cardMonthInput = document.getElementById('cardMonth');
   const cardYearInput = document.getElementById('cardYear');
 
-  if (cvv.trim() !== '') {
-    cardBack.style.transform = 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
-    cardFront.style.transform = 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
+  [cardNumberInput, cardHolderInput, cardMonthInput, cardYearInput].forEach(inputField => {
+    inputField.addEventListener('input', () => {
+    
+      const hasInput = [cardNumberInput, cardHolderInput, cardMonthInput, cardYearInput]
+        .some(input => input.value.trim() !== '');
 
-  } else {
-    cardBack.style.transform = 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
-    cardFront.style.transform = 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
-  
-  }
+        cardBack.style.transform = hasInput
+        ? 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)'
+        : 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
 
- [cardNumberInput, cardHolderInput, cardMonthInput, cardYearInput].forEach(inputField => {
-  inputField.addEventListener('input', () => {
-   
-    const hasInput = [cardNumberInput, cardHolderInput, cardMonthInput, cardYearInput]
-      .some(input => input.value.trim() !== '');
-
-      cardBack.style.transform = hasInput
-      ? 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)'
-      : 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
-
-    cardFront.style.transform = hasInput
-      ? 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)'
-      : 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
-
-      
-   
+      cardFront.style.transform = hasInput
+        ? 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)'
+        : 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
+    });
   });
-});
+
+  cardBack.style.transform = `perspective(2000px) rotateY(${cvv.trim() !== '' ? '0deg' : '-180deg'}) rotateX(0deg) rotate(0deg)`;
+  cardFront.style.transform = `perspective(2000px) rotateY(${cvv.trim() !== '' ? '-180deg' : '0deg'}) rotateX(0deg) rotate(0deg)`;
 }
 
 cardCvv.addEventListener('input', () => {
@@ -187,34 +152,29 @@ cardCvv.addEventListener('input', () => {
 cardCvv.addEventListener("blur", () => {
   cardBack.style.transform = 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
   cardFront.style.transform = 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
-
 })
 
 cardCvv.addEventListener("focus", () => {
   cardBack.style.transform = 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
   cardFront.style.transform = 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
-
 })
 
 const updateCvvBand = () => {
-  let cvvInput = cardCvv.value;
+  const cvvInput = cardCvv.value;
 
+  const maskedCvv = cvvInput.replace(/./g, '*');
 
-  let maskedCvv = cvvInput.replace(/./g, '*');
-
-  let cvvBandText = document.getElementById("cvvBandValue");
+  const cvvBandText = document.getElementById("cvvBandValue");
   cvvBandText.textContent = maskedCvv;
 }
 
 cardCvv.addEventListener("input", updateCvvBand);
-
 
 let imageSources = [
   'img/amex.png',
   'img/visa.png',
   'img/mastercard.png',
   'img/visa.png',
-
 ];
 
 let currentImageIndex = 0;
@@ -227,7 +187,7 @@ let currentImageIndex = 0;
             cardTypeImg.style.opacity = 1;
         }, 500); 
     }
-    setInterval(changeImage, 5000);
+setInterval(changeImage, 5000);
 
 
 
