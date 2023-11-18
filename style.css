@@ -148,9 +148,15 @@ body {
   padding-left: 35px;
   padding-right: 47px;
   cursor: pointer;
+}
+
+.bordered {
   border: solid 1px white;
   border-radius: 10px;
 }
+
+
+
 
 .card-item__numberItem {
   width: 1px;
@@ -175,8 +181,6 @@ body {
   font-weight: 500;
   display: block;
   cursor: pointer;
-  border: solid 1px white;
-  border-radius: 10px;
 }
 
 .card-item__holder {
@@ -207,8 +211,6 @@ body {
   white-space: nowrap;
   flex-shrink: 0;
   cursor: pointer;
-  border: solid 1px white;
-  border-radius: 10px;
 }
 
 .card-item__dateTitle {

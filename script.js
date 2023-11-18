@@ -12,22 +12,61 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardItemBack = document.querySelector('.card-item__side.-back');
   const cardTypeImgBack = cardItemBack.querySelector('.card-item__typeImg');
   const cardTypeImg = document.querySelector('.card-item__typeImg');
+  const cardItemNumber = document.querySelector('.card-item__number');
+  const cardItemInfo = document.querySelector('.card-item__info');
+  const cardItemData = document.querySelector('.card-item__date');
 
   const visaRegex = /^4/;
   const mastercardRegex = /^5[1-5]/;
 
   cardNumberInput.addEventListener('input', () => {
     updateCardNumberLabel();
+  
     //updateCardType();
     //still in development
   });
 
+
   cardHolderInput.addEventListener('input', () => {
     updateCardHolder();
+   
   });
 
   cardMonthInput.addEventListener('input', () => {
     updateCardDate();
+   
+
+  });
+
+  cardNumberInput.addEventListener('focus', () => {
+    cardItemNumber.classList.add('bordered');
+  });
+  
+  cardHolderInput.addEventListener('focus', () => {
+    cardItemInfo.classList.add('bordered');
+  });
+  
+  cardMonthInput.addEventListener('focus', () => {
+    cardItemData.classList.add('bordered');
+  });
+  
+ 
+  cardNumberInput.addEventListener('blur', () => {
+    if (!cardNumberInput.value.trim()) {
+      cardItemNumber.classList.remove('bordered');
+    }
+  });
+  
+  cardHolderInput.addEventListener('blur', () => {
+    if (!cardHolderInput.value.trim()) {
+      cardItemInfo.classList.remove('bordered');
+    }
+  });
+  
+  cardMonthInput.addEventListener('blur', () => {
+    if (!cardMonthInput.value.trim()) {
+      cardItemData.classList.remove('bordered');
+    }
   });
 
   cardYearInput.addEventListener('input', () => {
@@ -168,3 +207,7 @@ let currentImageIndex = 0;
         }, 500); 
     }
     setInterval(changeImage, 5000);
+
+
+
+ 
