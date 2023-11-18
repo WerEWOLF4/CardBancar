@@ -149,9 +149,11 @@ cardCvvInput.addEventListener("input", updateCvvBand ());
 
 
 let imageSources = [
-  'img/mastercard.png',
   'img/amex.png',
   'img/visa.png',
+  'img/mastercard.png',
+  'img/visa.png',
+
 ];
 
 let currentImageIndex = 0;
