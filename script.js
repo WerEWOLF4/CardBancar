@@ -168,7 +168,11 @@ const rotateCardBack = (cvv) => {
 });
 }
 
-cardCvv.addEventListener('input', () => {
+cardCvv.addEventListener('focus', () => {
+  rotateCardBack(cardCvv.value);
+});
+
+cardCvv.addEventListener('blur', () => {
   rotateCardBack(cardCvv.value);
 });
 
