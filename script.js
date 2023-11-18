@@ -157,7 +157,7 @@ const rotateCardBack = (cvv) => {
   } else {
     cardBack.style.transform = 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
     cardFront.style.transform = 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
-
+  
   }
 
  [cardNumberInput, cardHolderInput, cardMonthInput, cardYearInput].forEach(inputField => {
@@ -174,17 +174,21 @@ const rotateCardBack = (cvv) => {
       ? 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)'
       : 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
 
+      
+   
   });
 });
 }
 
-cardCvv.addEventListener('focus', () => {
+cardCvv.addEventListener('input', () => {
   rotateCardBack(cardCvv.value);
 });
 
-cardCvv.addEventListener('blur', () => {
-  rotateCardBack(cardCvv.value);
-});
+cardCvv.addEventListener("blur", () => {
+  cardBack.style.transform = 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
+  cardFront.style.transform = 'perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg)';
+
+})
 
 const updateCvvBand = () => {
   let cvvInput = cardCvv.value;
