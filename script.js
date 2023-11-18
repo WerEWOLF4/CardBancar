@@ -52,21 +52,18 @@ document.addEventListener('DOMContentLoaded', () => {
   
  
   cardNumberInput.addEventListener('blur', () => {
-    if (!cardNumberInput.value.trim()) {
       cardItemNumber.classList.remove('bordered');
-    }
+    
   });
   
   cardHolderInput.addEventListener('blur', () => {
-    if (!cardHolderInput.value.trim()) {
       cardItemInfo.classList.remove('bordered');
-    }
+   
   });
   
   cardMonthInput.addEventListener('blur', () => {
-    if (!cardMonthInput.value.trim()) {
       cardItemData.classList.remove('bordered');
-    }
+    
   });
 
   cardYearInput.addEventListener('input', () => {
