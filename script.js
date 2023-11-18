@@ -48,9 +48,9 @@ const updateCardNumberLabel = () => {
   cardNumberValue = cardNumberValue.replace(/\D/g, ''); // Remove non-numeric characters
   cardNumberValue = cardNumberValue.slice(0, 16); // Limit to 16 characters
 
-  const hiddenNumbers = cardNumberValue.slice(6, 12).replace(/\d/g, '*'); // Replace middle numbers with '*'
+  const hiddenNumbers = cardNumberValue.slice(4, 12).replace(/\d/g, '*'); // Replace middle numbers with '*'
 
-  const formattedNumber = formatCardNumber(`${cardNumberValue.slice(0, 6)}${hiddenNumbers}${cardNumberValue.slice(12)}`);
+  const formattedNumber = formatCardNumber(`${cardNumberValue.slice(0, 4)} ${hiddenNumbers} ${cardNumberValue.slice(12)}`);
 
   cardNumberLabel.textContent = formattedNumber;
 };
