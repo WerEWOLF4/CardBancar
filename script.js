@@ -145,3 +145,23 @@ const updateCvvBand = () => {
 
 let cardCvvInput = document.getElementById("cardCvv");
 cardCvvInput.addEventListener("input", updateCvvBand ());
+
+
+
+let imageSources = [
+  'img/mastercard.png',
+  'img/amex.png',
+  'img/visa.png',
+];
+
+let currentImageIndex = 0;
+    let cardTypeImg = document.getElementById('cardTypeImg');
+    const changeImage = () => {
+        cardTypeImg.style.opacity = 0;
+        setTimeout(() =>{
+            cardTypeImg.src = imageSources[currentImageIndex];
+            currentImageIndex = (currentImageIndex + 1) % imageSources.length;
+            cardTypeImg.style.opacity = 1;
+        }, 500); 
+    }
+    setInterval(changeImage, 5000);
