@@ -46,8 +46,8 @@ const updateCardNumberLabel = () => {
   let cardNumberValue = cardNumberInput.value;
   cardNumberValue = cardNumberValue.replace(/\D/g, ''); 
   cardNumberValue = cardNumberValue.slice(0, 16); 
-  const hiddenNumbers = cardNumberValue.slice(6, 12).replace(/\d/g, '*'); 
-  const formattedNumber = formatCardNumber(`${cardNumberValue.slice(0, 6)}${hiddenNumbers}${cardNumberValue.slice(12)}`);
+  const hiddenNumbers = cardNumberValue.slice(4, -4).replace(/\d/g, '*'); 
+  const formattedNumber = `${cardNumberValue.slice(0, 4)}${hiddenNumbers}${cardNumberValue.slice(-4)}`;
   cardNumberLabel.textContent = formattedNumber;
 };
 
@@ -166,7 +166,6 @@ cardCvv.addEventListener("input", updateCvvBand);
 
 let imageSources = [
   'img/amex.png',
-  'img/visa.png',
   'img/mastercard.png',
   'img/visa.png',
 ];
