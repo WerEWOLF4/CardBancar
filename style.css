@@ -153,10 +153,9 @@ body {
 
 .bordered {
   border: solid 1px white;
-  border-radius: 10px;
+  border-radius: 1px;
+  transition: 0.4s;
 }
-
-
 
 
 .card-item__numberItem {
