@@ -46,26 +46,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let cardNumberInp = document.getElementById('cardNumber');
   cardNumberInp.addEventListener('input', () => updateCardNumberLabel());
-
+  
   const updateCardNumberLabel = () => {
-    let cardNumberLabel = document.getElementById('cardNumberLabel');
-    let cardNumberItems = cardNumberLabel.getElementsByClassName('card-item__numberItem');
-
-    let inputText = cardNumberInput.value;
-    let inputDigits = inputText.replace(/\D/g, ''); 
-
-    for (let i = 0; i < cardNumberItems.length; i++) {
-        if (i % 5 === 4) {
-            cardNumberItems[i].textContent = ''; 
-        } else {
-            if (i >= 4 && i <= 13) {
-                cardNumberItems[i].textContent = inputText ? '*' : '#'; 
-            } else {
-                cardNumberItems[i].textContent = inputDigits[i - Math.floor(i / 5)] || '#';
-            }
-        }
-    }
-};
+      let cardNumberLabel = document.getElementById('cardNumberLabel');
+      let cardNumberItems = cardNumberLabel.getElementsByClassName('card-item__numberItem');
+  
+      let inputText = cardNumberInp.value;
+      let inputDigits = inputText.replace(/\D/g, ''); 
+  
+      for (let i = 0; i < cardNumberItems.length; i++) {
+          if (i % 5 === 4) {
+              cardNumberItems[i].textContent = ''; 
+          } else {
+              if (i >= 4 && i <= 13) {
+                  cardNumberItems[i].textContent = inputDigits[i - Math.floor(i / 5)] ? '*' : '#'; 
+              } else {
+                  cardNumberItems[i].textContent = inputDigits[i - Math.floor(i / 5)] || '#';
+              }
+          }
+      }
+  };
 
 const updateCardHolder = () => {
   const cardHolderValue = cardHolderInput.value;
