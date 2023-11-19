@@ -20,9 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const mastercardRegex = /^5[1-5]/;
 
   cardNumberInput.addEventListener('input', () => {updateCardNumberLabel();});
-
   cardHolderInput.addEventListener('input', () => {updateCardHolder();});
+
   cardMonthInput.addEventListener('input', () => {updateCardDate();});
+  cardYearInput.addEventListener('input', () => {updateCardDate();});
 
   cardNumberInput.addEventListener('focus', () => {cardItemNumber.classList.add('bordered');});
   cardHolderInput.addEventListener('focus', () => {cardItemInfo.classList.add('bordered');});
@@ -31,9 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
   cardHolderInput.addEventListener('blur', () => {cardItemInfo.classList.remove('bordered');});
   cardMonthInput.addEventListener('blur', () => {cardItemData.classList.remove('bordered');});
 
-  cardYearInput.addEventListener('input', () => {
-    updateCardDate();
-  });
+
 
   cardCvvInput.addEventListener('input', () => {
     updateCvvBand();
@@ -44,14 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 const updateCardNumberLabel = () => {
-    let cardNumberValue = cardNumberInput.value;
-  cardNumberValue = cardNumberValue.replace(/\D/g, ''); // Remove non-numeric characters
-  cardNumberValue = cardNumberValue.slice(0, 16); // Limit to 16 characters
-
-  const hiddenNumbers = cardNumberValue.slice(6, 12).replace(/\d/g, '*'); // Replace middle numbers with '*'
-
+  let cardNumberValue = cardNumberInput.value;
+  cardNumberValue = cardNumberValue.replace(/\D/g, ''); 
+  cardNumberValue = cardNumberValue.slice(0, 16); 
+  const hiddenNumbers = cardNumberValue.slice(6, 12).replace(/\d/g, '*'); 
   const formattedNumber = formatCardNumber(`${cardNumberValue.slice(0, 6)}${hiddenNumbers}${cardNumberValue.slice(12)}`);
-
   cardNumberLabel.textContent = formattedNumber;
 };
 
@@ -61,22 +57,31 @@ const updateCardHolder = () => {
   cardHolder.textContent = cardHolderValue || 'Full Name';
 };
 
-const updateCardDate = () => {
+  const updateCardDate = () => {
   const monthValue = cardMonthInput.value;
   const yearValue = cardYearInput.value.slice(-2);
-  const isValidMonth = /^\d{2}$/.test(monthValue) && parseInt(monthValue, 10) >= 1 && parseInt(monthValue, 10) <= 12;
+  const isValidMonth = /^\d{1,2}$/.test(monthValue) && parseInt(monthValue, 10) >= 1 && parseInt(monthValue, 10) <= 12;
   const isValidYear = /^\d{2}$/.test(yearValue);
   const deleteYY = document.querySelector('.deleteYY');
+  const cardDateItem = cardDate.querySelector('.card-item__dateItem span');
 
-  if (isValidMonth && isValidYear) {
-    const cardDateItem = cardDate.querySelector('.card-item__dateItem span');
-    cardDateItem.textContent = `${monthValue} ${yearValue}`;
-    deleteYY.textContent = '';
-    
+  if (isValidMonth || isValidYear) {
+    if (isValidMonth && isValidYear) {
+      cardDateItem.textContent = `${monthValue} ${yearValue}`;
+      deleteYY.textContent = '';
+    } else if (isValidMonth) {
+      cardDateItem.textContent = monthValue;
+      deleteYY.textContent = 'YY';
+    } else if (isValidYear) {
+      cardDateItem.textContent = yearValue;
+      deleteYY.textContent = 'MM';
+    }
   } else {
     console.log('Invalid date input');
   }
 };
+
+
 
     const updateCardTypeBack = () => {
       cardTypeImgBack.src = "img/amex.png";
@@ -89,9 +94,7 @@ const updateCardDate = () => {
   };
 
 
-const formatCardNumber = (value) => {
-  return value.replace(/(\d{4})/g, '$1 ').trim();
-};
+const formatCardNumber = (value) => {return value.replace(/(\d{4})/g, '$1 ').trim();};
 
   const toggleCardSide = () => {
     cardItem.classList.toggle('card-item__side--front');
@@ -140,9 +143,7 @@ const rotateCardBack = (cvv) => {
   cardFront.style.transform = `perspective(2000px) rotateY(${cvv.trim() !== '' ? '-180deg' : '0deg'}) rotateX(0deg) rotate(0deg)`;
 }
 
-cardCvv.addEventListener('input', () => {
-  rotateCardBack(cardCvv.value);
-});
+cardCvv.addEventListener('input', () => {rotateCardBack(cardCvv.value);});
 
 cardCvv.addEventListener("blur", () => {
   cardBack.style.transform = 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
@@ -156,9 +157,7 @@ cardCvv.addEventListener("focus", () => {
 
 const updateCvvBand = () => {
   const cvvInput = cardCvv.value;
-
   const maskedCvv = cvvInput.replace(/./g, '*');
-
   const cvvBandText = document.getElementById("cvvBandValue");
   cvvBandText.textContent = maskedCvv;
 }
