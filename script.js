@@ -33,19 +33,21 @@ document.addEventListener('DOMContentLoaded', () => {
   cardCvvInput.addEventListener('input', () => {updateCvvBand();});
   submitButton.addEventListener('click', () => {toggleCardSide();});
 
-const updateCardNumberLabel = () => {
+  const updateCardNumberLabel = () => {
+    let inputValue = cardInputInput.value.replace(/\D/g, '');
+    inputValue = inputValue.slice(0, 16);
+    const formatedValue = inputValue.replace(/(\d{4})/g, '$1 ').trim();
+    cardInputInput.value = formatedValue;
+
     let cardNumberValue = cardNumberInput.value;
-  cardNumberValue = cardNumberValue.replace(/\D/g, ''); // Remove non-numeric characters
-  cardNumberValue = cardNumberValue.slice(0, 16); // Limit to 16 characters
+    cardNumberValue = cardNumberValue.replace(/\D/g, ''); 
+    cardNumberValue = cardNumberValue.slice(0, 16); 
+    const formattedNumber = cardNumberValue.replace(/(\d{4})/g, '$1 ').trim();
+    const hiddenNumbers = formattedNumber.slice(5, -5).replace(/\d/g, '*'); 
+    const finalFormattedNumber = `${formattedNumber.slice(0, 5)}${hiddenNumbers}${formattedNumber.slice(-5)}`;
+    cardNumberLabel.textContent = finalFormattedNumber;
+  };
 
-  const hiddenNumbers1 = cardNumberValue.slice(4, 8).replace(/\d/g, '*'); // Replace middle numbers with '*'
-
-  const hiddenNumbers2 = cardNumberValue.slice(8, 12).replace(/\d/g, '*'); // Replace middle numbers with '*'
-
-  const formattedNumber = formatCardNumber(`${cardNumberValue.slice(0, 4)} ${hiddenNumbers1} ${hiddenNumbers2} ${cardNumberValue.slice(12)}`);
-
-  cardNumberLabel.textContent = formattedNumber;
-};
 
   const updateCardHolder = () => {
     const cardHolderValue = cardHolderInput.value;
@@ -117,6 +119,9 @@ const rotateCardBack = (cvv) => {
         : 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
     });
   });
+
+  cardBack.style.transform = `perspective(2000px) rotateY(${cvv.trim() !== '' ? '0deg' : '-180deg'}) rotateX(0deg) rotate(0deg)`;
+  cardFront.style.transform = `perspective(2000px) rotateY(${cvv.trim() !== '' ? '-180deg' : '0deg'}) rotateX(0deg) rotate(0deg)`;
 }
 
 cardCvv.addEventListener('input', () => {rotateCardBack(cardCvv.value);});
@@ -158,52 +163,3 @@ let currentImageIndex = 0;
         }, 500); 
     }
 setInterval(changeImage, 5000);
-
-document.getElementById('cardNumber').addEventListener('input', (e) => {
-  let inputValue = e.target.value;
-  let numericValue = inputValue.replace(/\D/g, '');
-
-  if (inputValue !== numericValue) {
-   
-    e.target.value = numericValue;
-  }
-  
-  let formattedValue = formatCardNumber(numericValue);
-  e.target.value = formattedValue;
-});
-
-const formatCardNumber = (value) => {
-  let formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
-  return formattedValue ;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  
-  let cardItemName = document.querySelector(".card-item__name");
-  let cardHolderInput = document.getElementById("cardHolder");
-
-  cardHolderInput.addEventListener("input", (e) => {
-
-    let content = cardItemName.innerText;
-    let inputValue = e.target.value;
-    inputValue = inputValue.replace(/[^a-zA-Z ]/g, '');
-    cardHolderInput.value = inputValue.replace(/[^a-zA-Z ]/g, '');
-    let sanitizedContent = content.replace(/[^a-zA-Z ]/g, '');
-    
-    cardItemName.innerText = sanitizedContent || "Full Name";
-  });
-});
-
-
-  let cardCvvInput = document.getElementById("cardCvv");
-
-  cardCvvInput.addEventListener("input", (event) => {
-
-    let inputValue = event.target.value;
-    inputValue = inputValue.replace(/[^0-9]/g, '');
-
-    if (inputValue.length > 4) {
-      inputValue = inputValue.slice(0, 4);
-    }
-    cardCvvInput.value = inputValue;
-  });
