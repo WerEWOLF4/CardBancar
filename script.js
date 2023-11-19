@@ -190,10 +190,10 @@ setInterval(changeImage, 5000);
 
 document.getElementById('cardNumber').addEventListener('input', (e) => {
   let inputValue = e.target.value;
-  let numericValue = inputValue.replace(/\D/g, ''); // Remove non-numeric characters
+  let numericValue = inputValue.replace(/\D/g, '');
 
   if (inputValue !== numericValue) {
-    // If non-numeric characters were removed, update the input value
+   
     e.target.value = numericValue;
   }
 
@@ -205,3 +205,17 @@ const formatCardNumber = (value) => {
   let formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
   return formattedValue;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  
+  let cardItemName = document.querySelector(".card-item__name");
+  let cardHolderInput = document.getElementById("cardHolder");
+
+  cardHolderInput.addEventListener("input", () => {
+
+    let content = cardItemName.innerText;
+    let sanitizedContent = content.replace(/[^a-zA-Z ]/g, '');
+    
+    cardItemName.innerText = sanitizedContent;
+  });
+});
