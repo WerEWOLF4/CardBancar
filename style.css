@@ -159,6 +159,10 @@ body {
 
 
 .card-item__numberItem {
+  font-weight: 500;
+  line-height: 1;
+  color: #fff;
+  font-size: 25px;
   width: 1px;
   display: inline-block;
 }
