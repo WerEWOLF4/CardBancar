@@ -15,10 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardItemNumber = document.querySelector('#Numbers');
   const cardItemInfo = document.querySelector('.card-item__info');
   const cardItemData = document.querySelector('.card-item__date');
-
-
-  const visaRegex = /^4/;
-  const mastercardRegex = /^5[1-5]/;
+  const cardInputInput = document.querySelector('.card-input__input');
 
   cardNumberInput.addEventListener('input', () => {updateCardNumberLabel();});
   cardHolderInput.addEventListener('input', () => {updateCardHolder();});
@@ -33,30 +30,30 @@ document.addEventListener('DOMContentLoaded', () => {
   cardHolderInput.addEventListener('blur', () => {cardItemInfo.classList.remove('bordered');});
   cardMonthInput.addEventListener('blur', () => {cardItemData.classList.remove('bordered');});
 
+  cardCvvInput.addEventListener('input', () => {updateCvvBand();});
+  submitButton.addEventListener('click', () => {toggleCardSide();});
+
+  const updateCardNumberLabel = () => {
+    let inputValue = cardInputInput.value.replace(/\D/g, '');
+    inputValue = inputValue.slice(0, 16);
+    const formatedValue = inputValue.replace(/(\d{4})/g, '$1 ').trim();
+    cardInputInput.value = formatedValue;
+
+    let cardNumberValue = cardNumberInput.value;
+    cardNumberValue = cardNumberValue.replace(/\D/g, ''); 
+    cardNumberValue = cardNumberValue.slice(0, 16); 
+    const formattedNumber = cardNumberValue.replace(/(\d{4})/g, '$1 ').trim();
+    const hiddenNumbers = formattedNumber.slice(5, -5).replace(/\d/g, '*'); 
+    const finalFormattedNumber = `${formattedNumber.slice(0, 5)}${hiddenNumbers}${formattedNumber.slice(-5)}`;
+    cardNumberLabel.textContent = finalFormattedNumber;
+  };
 
 
-  cardCvvInput.addEventListener('input', () => {
-    updateCvvBand();
-  });
-
-  submitButton.addEventListener('click', () => {
-    toggleCardSide();
-  });
-
-const updateCardNumberLabel = () => {
-  let cardNumberValue = cardNumberInput.value;
-  cardNumberValue = cardNumberValue.replace(/\D/g, ''); 
-  cardNumberValue = cardNumberValue.slice(0, 16); 
-  const hiddenNumbers = cardNumberValue.slice(4, -4).replace(/\d/g, '*'); 
-  const formattedNumber = `${cardNumberValue.slice(0, 4)}${hiddenNumbers}${cardNumberValue.slice(-4)}`;
-  cardNumberLabel.textContent = formattedNumber;
-};
-
-const updateCardHolder = () => {
-  const cardHolderValue = cardHolderInput.value;
-  const cardHolder = document.querySelector('.card-item__name');
-  cardHolder.textContent = cardHolderValue || 'Full Name';
-};
+  const updateCardHolder = () => {
+    const cardHolderValue = cardHolderInput.value;
+    const cardHolder = document.querySelector('.card-item__name');
+    cardHolder.textContent = cardHolderValue || 'Full Name';
+  };
 
   const updateCardDate = () => {
   const monthValue = cardMonthInput.value;
@@ -82,20 +79,11 @@ const updateCardHolder = () => {
   }
 };
 
-
-
-    const updateCardTypeBack = () => {
-      cardTypeImgBack.src = "img/amex.png";
-    };
-
   const updateCvvBandBack = () => {
     const cvvValue = cardCvvInput.value;
     const cvvBand = cardItemBack.querySelector('.card-item__cvvBand');
     cvvBand.textContent = cvvValue;
   };
-
-
-const formatCardNumber = (value) => {return value.replace(/(\d{4})/g, '$1 ').trim();};
 
   const toggleCardSide = () => {
     cardItem.classList.toggle('card-item__side--front');
@@ -104,14 +92,6 @@ const formatCardNumber = (value) => {return value.replace(/(\d{4})/g, '$1 ').tri
     updateCvvBandBack(); 
   };
 
-  //still in development
-  if(cardNumberInput === visaRegex) {
-    cardTypeImg.src = "img/mastercard.png";
-  } else if (mastercardRegex.test(cardNumberInput.value)) {
-    cardTypeImg.src = "img/mastercard.png";
-  } else {
-    cardTypeImg.src = "img/visa.png";
-  }
 });
 
 const cardBack = document.getElementById('cardBack');
@@ -164,6 +144,7 @@ const updateCvvBand = () => {
 }
 
 cardCvv.addEventListener("input", updateCvvBand);
+
 
 let imageSources = [
   'img/amex.png',
