@@ -189,8 +189,15 @@ let currentImageIndex = 0;
 setInterval(changeImage, 5000);
 
 document.getElementById('cardNumber').addEventListener('input', (e) => {
-  let inputValue = e.target.value.replace(/\D/g, ''); 
-  let formattedValue = formatCardNumber(inputValue);
+  let inputValue = e.target.value;
+  let numericValue = inputValue.replace(/\D/g, ''); // Remove non-numeric characters
+
+  if (inputValue !== numericValue) {
+    // If non-numeric characters were removed, update the input value
+    e.target.value = numericValue;
+  }
+
+  let formattedValue = formatCardNumber(numericValue);
   e.target.value = formattedValue;
 });
 
