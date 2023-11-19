@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 const updateCardNumberLabel = () => {
+  
     let cardNumberValue = cardNumberInput.value;
   cardNumberValue = cardNumberValue.replace(/\D/g, ''); // Remove non-numeric characters
   cardNumberValue = cardNumberValue.slice(0, 16); // Limit to 16 characters
@@ -186,3 +187,14 @@ let currentImageIndex = 0;
         }, 500); 
     }
 setInterval(changeImage, 5000);
+
+document.getElementById('cardNumber').addEventListener('input', (e) => {
+  let inputValue = e.target.value.replace(/\D/g, ''); 
+  let formattedValue = formatCardNumber(inputValue);
+  e.target.value = formattedValue;
+});
+
+const formatCardNumber = (value) => {
+  let formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
+  return formattedValue;
+}
