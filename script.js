@@ -39,40 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const formatedValue = inputValue.replace(/(\d{4})/g, '$1 ').trim();
     cardInputInput.value = formatedValue;
 
-
-  submitButton.addEventListener('click', () => {
-    toggleCardSide();
-  });
-
-  let cardNumberInp = document.getElementById('cardNumber');
-  cardNumberInp.addEventListener('input', updateCardNumber);
-
-  const updateCardNumber = () => {
-      let cardNumberLabel = document.getElementById('cardNumberLabel');
-      let cardNumberItems = cardNumberLabel.getElementsByClassName('card-item__numberItem');
-
-      let inputText = cardNumberInput.value;
-      let inputDigits = inputText.replace(/\D/g, ''); // Remove non-numeric characters
-
-      for (let i = 0; i < cardNumberItems.length; i++) {
-          if (i % 5 === 4) {
-              cardNumberItems[i].textContent = ''; // Add empty space every 4 digits
-          } else {
-              if (i >= 4 && i <= 13) {
-                  cardNumberItems[i].textContent = '*'; // Replace # with * from 5th to 12th digit
-              } else {
-                  cardNumberItems[i].textContent = inputDigits[i - Math.floor(i / 5)] || '#';
-              }
-          }
-      }
-  }
-
-const updateCardHolder = () => {
-  const cardHolderValue = cardHolderInput.value;
-  const cardHolder = document.querySelector('.card-item__name');
-  cardHolder.textContent = cardHolderValue || 'Full Name';
-};
-
     let cardNumberValue = cardNumberInput.value;
     cardNumberValue = cardNumberValue.replace(/\D/g, ''); 
     cardNumberValue = cardNumberValue.slice(0, 16); 
