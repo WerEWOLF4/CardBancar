@@ -56,7 +56,7 @@ const updateCardNumberLabel = () => {
 
   const formattedNumber = formatCardNumber(`${cardNumberValue.slice(0, 4)} ${hiddenNumbers1} ${hiddenNumbers2} ${cardNumberValue.slice(12)}`);
 
-  cardNumberLabel.textContent = formattedNumber;
+  cardNumberLabel.textContent = formattedNumber || "#### #### #### ####" ;
 
   
 };
@@ -141,9 +141,6 @@ const rotateCardBack = (cvv) => {
         : 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
     });
   });
-
-  cardBack.style.transform = `perspective(2000px) rotateY(${cvv.trim() !== '' ? '0deg' : '-180deg'}) rotateX(0deg) rotate(0deg)`;
-  cardFront.style.transform = `perspective(2000px) rotateY(${cvv.trim() !== '' ? '-180deg' : '0deg'}) rotateX(0deg) rotate(0deg)`;
 }
 
 cardCvv.addEventListener('input', () => {
@@ -198,14 +195,14 @@ document.getElementById('cardNumber').addEventListener('input', (e) => {
    
     e.target.value = numericValue;
   }
-
+  
   let formattedValue = formatCardNumber(numericValue);
   e.target.value = formattedValue;
 });
 
 const formatCardNumber = (value) => {
   let formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
-  return formattedValue;
+  return formattedValue ;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -213,12 +210,15 @@ document.addEventListener("DOMContentLoaded", () => {
   let cardItemName = document.querySelector(".card-item__name");
   let cardHolderInput = document.getElementById("cardHolder");
 
-  cardHolderInput.addEventListener("input", () => {
+  cardHolderInput.addEventListener("input", (e) => {
 
     let content = cardItemName.innerText;
+    let inputValue = e.target.value;
+    inputValue = inputValue.replace(/[^a-zA-Z ]/g, '');
+    cardHolderInput.value = inputValue.replace(/[^a-zA-Z ]/g, '');
     let sanitizedContent = content.replace(/[^a-zA-Z ]/g, '');
     
-    cardItemName.innerText = sanitizedContent;
+    cardItemName.innerText = sanitizedContent || "Full Name";
   });
 });
 
