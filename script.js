@@ -57,6 +57,8 @@ const updateCardNumberLabel = () => {
   const formattedNumber = formatCardNumber(`${cardNumberValue.slice(0, 4)} ${hiddenNumbers1} ${hiddenNumbers2} ${cardNumberValue.slice(12)}`);
 
   cardNumberLabel.textContent = formattedNumber;
+
+  
 };
 
 const updateCardHolder = () => {
@@ -219,3 +221,17 @@ document.addEventListener("DOMContentLoaded", () => {
     cardItemName.innerText = sanitizedContent;
   });
 });
+
+
+  let cardCvvInput = document.getElementById("cardCvv");
+
+  cardCvvInput.addEventListener("input", (event) => {
+
+    let inputValue = event.target.value;
+    inputValue = inputValue.replace(/[^0-9]/g, '');
+
+    if (inputValue.length > 4) {
+      inputValue = inputValue.slice(0, 4);
+    }
+    cardCvvInput.value = inputValue;
+  });
