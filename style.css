@@ -153,13 +153,16 @@ body {
 
 .bordered {
   border: solid 1px white;
-  border-radius: 10px;
+  border-radius: 1px;
+  transition: 0.4s;
 }
 
 
-
-
 .card-item__numberItem {
+  font-weight: 500;
+  line-height: 1;
+  color: #fff;
+  font-size: 25px;
   width: 1px;
   display: inline-block;
 }
@@ -423,6 +426,6 @@ input[type="text" i] {
   height: 45px;
   width: 380px;
 }
-.zece{
+.Item{
   height: 75px;
 }
