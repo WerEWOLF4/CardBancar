@@ -44,28 +44,28 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleCardSide();
   });
 
-  const cardNumberInp = document.getElementById('cardNumber');
+  let cardNumberInp = document.getElementById('cardNumber');
   cardNumberInp.addEventListener('input', () => updateCardNumberLabel());
 
   const updateCardNumberLabel = () => {
-      const cardNumberLabel = document.getElementById('cardNumberLabel');
-      const cardNumberItems = cardNumberLabel.getElementsByClassName('card-item__numberItem');
+    let cardNumberLabel = document.getElementById('cardNumberLabel');
+    let cardNumberItems = cardNumberLabel.getElementsByClassName('card-item__numberItem');
 
-      const inputText = cardNumberInput.value;
-      const inputDigits = inputText.replace(/\D/g, ''); // Remove non-numeric characters
+    let inputText = cardNumberInput.value;
+    let inputDigits = inputText.replace(/\D/g, ''); 
 
-      for (var i = 0; i < cardNumberItems.length; i++) {
+    for (let i = 0; i < cardNumberItems.length; i++) {
         if (i % 5 === 4) {
-            cardNumberItems[i].textContent = ''; // Add empty space every 4 digits
+            cardNumberItems[i].textContent = ''; 
         } else {
             if (i >= 4 && i <= 13) {
-                cardNumberItems[i].textContent = '*'; // Replace # with * from 5th to 12th digit
+                cardNumberItems[i].textContent = inputText ? '*' : '#'; 
             } else {
                 cardNumberItems[i].textContent = inputDigits[i - Math.floor(i / 5)] || '#';
             }
         }
-      }
-  };
+    }
+};
 
 const updateCardHolder = () => {
   const cardHolderValue = cardHolderInput.value;
@@ -135,7 +135,7 @@ const rotateCardBack = (cvv) => {
   [cardNumberInput, cardHolderInput, cardMonthInput, cardYearInput].forEach(inputField => {
     inputField.addEventListener('input', () => {
     
-      const hasInput = [cardNumberInput, cardHolderInput, cardMonthInput, cardYearInput]
+      const hasInput = [cardCvv]
         .some(input => input.value.trim() !== '');
 
         cardBack.style.transform = hasInput
