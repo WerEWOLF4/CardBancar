@@ -15,10 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardItemNumber = document.querySelector('#Numbers');
   const cardItemInfo = document.querySelector('.card-item__info');
   const cardItemData = document.querySelector('.card-item__date');
-
-
-  const visaRegex = /^4/;
-  const mastercardRegex = /^5[1-5]/;
+  const cardNumberInp = document.getElementById('cardNumber');
 
   cardNumberInput.addEventListener('input', () => {updateCardNumberLabel();});
 
@@ -32,19 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
   cardHolderInput.addEventListener('blur', () => {cardItemInfo.classList.remove('bordered');});
   cardMonthInput.addEventListener('blur', () => {cardItemData.classList.remove('bordered');});
 
-  cardYearInput.addEventListener('input', () => {
-    updateCardDate();
-  });
+  cardYearInput.addEventListener('input', () => {updateCardDate();});
+  cardCvvInput.addEventListener('input', () => {updateCvvBand();});
+  submitButton.addEventListener('click', () => {toggleCardSide();});
 
-  cardCvvInput.addEventListener('input', () => {
-    updateCvvBand();
-  });
-
-  submitButton.addEventListener('click', () => {
-    toggleCardSide();
-  });
-
-  let cardNumberInp = document.getElementById('cardNumber');
+  
   cardNumberInp.addEventListener('input', () => updateCardNumberLabel());
   
   const updateCardNumberLabel = () => {
@@ -76,15 +65,22 @@ const updateCardHolder = () => {
 const updateCardDate = () => {
   const monthValue = cardMonthInput.value;
   const yearValue = cardYearInput.value.slice(-2);
-  const isValidMonth = /^\d{2}$/.test(monthValue) && parseInt(monthValue, 10) >= 1 && parseInt(monthValue, 10) <= 12;
+  const isValidMonth = /^\d{1,2}$/.test(monthValue) && parseInt(monthValue, 10) >= 1 && parseInt(monthValue, 10) <= 12;
   const isValidYear = /^\d{2}$/.test(yearValue);
   const deleteYY = document.querySelector('.deleteYY');
+  const cardDateItem = cardDate.querySelector('.card-item__dateItem span');
 
-  if (isValidMonth && isValidYear) {
-    const cardDateItem = cardDate.querySelector('.card-item__dateItem span');
-    cardDateItem.textContent = `${monthValue} ${yearValue}`;
-    deleteYY.textContent = '';
-    
+  if (isValidMonth || isValidYear) {
+    if (isValidMonth && isValidYear) {
+      cardDateItem.textContent = `${monthValue} ${yearValue}`;
+      deleteYY.textContent = '';
+    } else if (isValidMonth) {
+      cardDateItem.textContent = monthValue;
+      deleteYY.textContent = 'YY';
+    } else if (isValidYear) {
+      cardDateItem.textContent = yearValue;
+      deleteYY.textContent = 'MM';
+    }
   } else {
     console.log('Invalid date input');
   }
@@ -100,26 +96,12 @@ const updateCardDate = () => {
     cvvBand.textContent = cvvValue;
   };
 
-
-const formatCardNumber = (value) => {
-  return value.replace(/(\d{4})/g, '$1 ').trim();
-};
-
   const toggleCardSide = () => {
     cardItem.classList.toggle('card-item__side--front');
     cardItem.classList.toggle('card-item__side--back');
     updateCardTypeBack(); 
     updateCvvBandBack(); 
   };
-
-  //still in development
-  if(cardNumberInput === visaRegex) {
-    cardTypeImg.src = "img/mastercard.png";
-  } else if (mastercardRegex.test(cardNumberInput.value)) {
-    cardTypeImg.src = "img/mastercard.png";
-  } else {
-    cardTypeImg.src = "img/visa.png";
-  }
 });
 
 const cardBack = document.getElementById('cardBack');
@@ -178,7 +160,6 @@ let imageSources = [
   'img/amex.png',
   'img/visa.png',
   'img/mastercard.png',
-  'img/visa.png',
 ];
 
 let currentImageIndex = 0;
@@ -207,7 +188,8 @@ document.getElementById('cardNumber').addEventListener('input', (e) => {
 });
 
 const formatCardNumber = (value) => {
-  let formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
+  let formattedValue = value.replac
+  e(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
   return formattedValue ;
 }
 
@@ -228,9 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
-  let cardCvvInput = document.getElementById("cardCvv");
-
+  
   cardCvvInput.addEventListener("input", (event) => {
 
     let inputValue = event.target.value;
@@ -240,4 +220,4 @@ document.addEventListener("DOMContentLoaded", () => {
       inputValue = inputValue.slice(0, 4);
     }
     cardCvvInput.value = inputValue;
-  });
+});  
