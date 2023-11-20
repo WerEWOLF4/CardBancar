@@ -189,22 +189,39 @@ const updateCvvBand = () => {
 cardCvv.addEventListener("input", updateCvvBand);
 
 let imageSources = [
-  'img/amex.png',
   'img/visa.png',
+  'img/amex.png',
   'img/mastercard.png',
 ];
 
 let currentImageIndex = 0;
-    let cardTypeImg = document.getElementById('cardTypeImg');
-    const changeImage = () => {
-        cardTypeImg.style.opacity = 0;
-        setTimeout(() =>{
-            cardTypeImg.src = imageSources[currentImageIndex];
-            currentImageIndex = (currentImageIndex + 1) % imageSources.length;
-            cardTypeImg.style.opacity = 1;
-        }, 500); 
-    }
-setInterval(changeImage, 5000);
+let cardTypeImg = document.getElementById('cardTypeImg');
+
+
+cardTypeImg.src = imageSources[currentImageIndex];
+
+const cardNumberInput = document.getElementById('cardNumber');
+cardNumberInput.addEventListener('input', () => {
+  const firstDigit = cardNumberInput.value.charAt(0);
+
+  switch (firstDigit) {
+    case '3':
+      currentImageIndex = 1; 
+      break;
+    case '4':
+      currentImageIndex = 0; 
+      break;
+    case '5':
+      currentImageIndex = 2; 
+      break;
+    default:
+      
+      currentImageIndex = 0;
+  }
+
+  
+  cardTypeImg.src = imageSources[currentImageIndex];
+});
 
 document.getElementById('cardNumber').addEventListener('input', (e) => {
   let inputValue = e.target.value;
