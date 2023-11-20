@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardNumberYear = document.getElementById('cardYear');
 
 
+
   cardNumberInput.addEventListener('input', () => {updateCardNumberLabel();});
 
   cardHolderInput.addEventListener('input', () => {updateCardHolder();});
@@ -43,57 +44,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
   cardNumberInp.addEventListener('input', () => updateCardNumberLabel());
+   const updateCardNumberLabel = () => {
+    let inputText = cardNumberInp.value;
+    let inputDigits = inputText.replace(/\D/g, '');
   
-const updateCardNumberLabel = () => {
-  let inputText = cardNumberInp.value;
-  let inputDigits = inputText.replace(/\D/g, '');
-  let formattedText = formatCardNumber(inputDigits);
-
- 
-  const spanElements = cardNumberLabel.querySelectorAll('.card-item__numberItem');
-  for (let i = 0; i < spanElements.length; i++) {
-    if (i < formattedText.length) {
-        if (spanElements[i].textContent !== formattedText[i]) {
-            animateTextChange(spanElements[i], formattedText[i]);
-            spanElements[i].textContent = formattedText[i];
+    const maskedInput = maskMiddleDigits(inputDigits);
+  
+    const spanElements = cardNumberLabel.querySelectorAll('.card-item__numberItem');
+    for (let i = 0; i < spanElements.length; i++) {
+      if (i < maskedInput.length) {
+        if (spanElements[i].textContent !== maskedInput[i]) {
+          animateTextChange(spanElements[i], maskedInput[i]);
+          spanElements[i].textContent = maskedInput[i];
         }
-    } else {
+      } else {
         if ((i + 1) % 5 === 0) {
-            spanElements[i].textContent = ''; // Ensure every fifth character remains an empty space
+          spanElements[i].textContent = ''; // Ensure every fifth character remains an empty space
         } else {
-            spanElements[i].textContent = '#';
+          spanElements[i].textContent = '#';
         }
+      }
     }
-}
+  };
+  function maskMiddleDigits(inputDigits) {
+    let maskedInput = '';
+    maskedInput += inputDigits.substring(0, 4);
+    for (let i = 4; i < 12; i++) {
+      if (inputDigits[i]) {
+        maskedInput += '*';
+      } else {
+        break;
+      }
+    }
+    maskedInput += inputDigits.substring(12);
+    maskedInput = maskedInput.replace(/(.{4})/g, '$1 ').trim();
+    return maskedInput;
+  }
 
-  const newText = inputText.slice(previousText.length);
-
-
-  appendWithAnimation(newText);
-
-
-  previousText = inputText;
-};
-
-function formatCardNumber(inputDigits) {
-
-  let formattedText = inputDigits.replace(/\s+/g, '').replace(/(.{4})/g, '$1 ').trim();
-  return formattedText;
-}
-
-function animateTextChange(element, newText) {
-
-  element.classList.add('text-change-animation');
-  setTimeout(() => {
+  
+  const updateCardHolder = () => {
+    const cardHolderValue = cardHolderInput.value;
+    const cardHolder = document.querySelector('.card-item__name');
+    cardHolder.textContent = cardHolderValue || "Full Name"
+    // if (cardHolderValue) {
+    //   cardHolder.textContent = cardHolderValue;
+    //   animateTextChange(cardHolder);
+    // } else {
+    //   cardHolder.textContent = 'Full Name';
+    // }
+  };
+  
+  function animateTextChange(element) {
+    element.classList.add('text-change-animation');
+    setTimeout(() => {
       element.classList.remove('text-change-animation');
-  }, 500); 
-}
-const updateCardHolder = () => {
-  const cardHolderValue = cardHolderInput.value;
-  const cardHolder = document.querySelector('.card-item__name');
-  cardHolder.textContent = cardHolderValue || 'Full Name';
-};
-
+    }, 500);
+  }
+  
 const cardMonthSelect = document.getElementById("cardMonth");
 const cardYearSelect = document.getElementById("cardYear");
 const cardDateItemMM = document.querySelector('.card-item__dateItem .deleteMM');
