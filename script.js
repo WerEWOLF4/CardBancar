@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   cardHolderInput.addEventListener('input', () => {updateCardHolder();});
   cardMonthInput.addEventListener('input', () => {updateCardDate();});
-  cardMonthInput.addEventListener('input', () => {updateCardDate();});
+  cardYearInput.addEventListener('input', () => {updateCardDate();});
 
 
   cardNumberInput.addEventListener('focus', () => {cardItemNumber.classList.add('bordered');});
@@ -70,29 +70,33 @@ const updateCardHolder = () => {
   cardHolder.textContent = cardHolderValue || 'Full Name';
 };
 
-const updateCardDate = () => {
-  const monthValue = cardMonthInput.value;
-  const yearValue = cardYearInput.value.slice(-2);
-  const isValidMonth = /^\d{1,2}$/.test(monthValue) && parseInt(monthValue, 10) >= 1 && parseInt(monthValue, 10) <= 12;
-  const isValidYear = /^\d{2}$/.test(yearValue);
-  const deleteYY = document.querySelector('.deleteYY');
-  const cardDateItem = cardDate.querySelector('.card-item__dateItem span');
+const cardMonthSelect = document.getElementById("cardMonth");
+const cardYearSelect = document.getElementById("cardYear");
+const cardDateItemMM = document.querySelector('.card-item__dateItem .deleteMM');
+const cardDateItemYY = document.querySelector('.card-item__dateItem .deleteYY');
 
-  if (isValidMonth || isValidYear) {
-    if (isValidMonth && isValidYear) {
-      cardDateItem.textContent = `${monthValue} ${yearValue}`;
-      deleteYY.textContent = '';
-    } else if (isValidMonth) {
-      cardDateItem.textContent = monthValue;
-      deleteYY.textContent = 'YY';
-    } else if (isValidYear) {
-      cardDateItem.textContent = yearValue;
-      deleteYY.textContent = 'MM';
-    }
+function updateCardDate() {
+  const selectedMonth = cardMonthSelect.value;
+  const selectedYear = cardYearSelect.value.slice(-2);
+
+  if (selectedMonth && selectedYear) {
+    cardDateItemMM.textContent = selectedMonth;
+    cardDateItemYY.textContent = selectedYear;
+  } else if (selectedMonth) {
+    cardDateItemMM.textContent = selectedMonth;
+    cardDateItemYY.textContent = 'YY';
+  } else if (selectedYear) {
+    cardDateItemMM.textContent = 'MM';
+    cardDateItemYY.textContent = selectedYear;
   } else {
-    console.log('Invalid date input');
+    cardDateItemMM.textContent = 'MM';
+    cardDateItemYY.textContent = 'YY';
   }
-};
+}
+
+// Add event listeners to update the card date when the selects change
+cardMonthSelect.addEventListener("change", updateCardDate);
+cardYearSelect.addEventListener("change", updateCardDate);
 
     const updateCardTypeBack = () => {
       cardTypeImgBack.src = "img/amex.png";
