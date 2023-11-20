@@ -145,16 +145,12 @@ const cardCvv = document.getElementById('cardCvv');
 const cardFront = document.getElementById("card-item__side__front");
 
 const rotateCardBack = (cvv) => {
-  const cardNumberInput = document.getElementById('cardNumber');
-  const cardHolderInput = document.getElementById('cardHolder');
-  const cardMonthInput = document.getElementById('cardMonth');
-  const cardYearInput = document.getElementById('cardYear');
 
   [cardCvv].forEach(inputField => {
     inputField.addEventListener('input', () => {
     
       const hasInput = [cardCvv]
-        .some(input => input.value.trim() !== '');
+        .some(input => input.value.trim() === '');
 
         cardBack.style.transform = hasInput
         ? 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)'
