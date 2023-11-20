@@ -44,10 +44,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
   cardNumberInp.addEventListener('input', () => updateCardNumberLabel());
-   const updateCardNumberLabel = () => {
-    let inputText = cardNumberInp.value;
-    let inputDigits = inputText.replace(/\D/g, '');
+
+  const imageSources = [
+    'img/visa.png',
+    'img/amex.png',
+    'img/mastercard.png',
+  ];
   
+  let currentImageIndex = 0;
+
+  cardTypeImg.src = imageSources[currentImageIndex];
+
+  cardNumberInput.addEventListener('input', () => {
+    const inputText = cardNumberInput.value;
+    const firstDigit = inputText.charAt(0);
+  
+    switch (firstDigit) {
+      case '3':
+        currentImageIndex = 1; // Set image index for American Express
+        updateCardNumberLabelAmex(inputText); // Update card number label for Amex
+        break;
+      case '4':
+        currentImageIndex = 0; // Set image index for Visa
+        updateCardNumberLabel(inputText); // Update card number label for Visa
+        break;
+      case '5':
+        currentImageIndex = 2; // Set image index for Mastercard
+        updateCardNumberLabel(inputText); // Update card number label for Mastercard
+        break;
+      default:
+        currentImageIndex = 0; // Default to Visa for any other first digit
+        updateCardNumberLabel(inputText); // Update card number label for default
+    }
+  
+    cardTypeImg.src = imageSources[currentImageIndex];
+  });
+  
+  const updateCardNumberLabel = (inputText) => {
+    let inputDigits = inputText.replace(/\D/g, '');
     const maskedInput = maskMiddleDigits(inputDigits);
   
     const spanElements = cardNumberLabel.querySelectorAll('.card-item__numberItem');
@@ -57,15 +91,50 @@ document.addEventListener('DOMContentLoaded', () => {
           animateTextChange(spanElements[i], maskedInput[i]);
           spanElements[i].textContent = maskedInput[i];
         }
+      // } else {
+      //   if ((i + 1) % 7 === 0) {
+      //     spanElements[i].textContent = ''; // Ensure every fifth character remains an empty space
+      //   } else {
+      //     spanElements[i].textContent = '#';
+      //   }
+      // }
+    }
+  };
+  const updateCardNumberLabelAmex = (inputText) => {
+    let formattedInput = inputText.replace(/\D/g, '');
+    let visibleDigits = '';
+  
+    for (let i = 0; i < formattedInput.length; i++) {
+      if (i < 4) {
+        visibleDigits += formattedInput[i];
+      } else if (i === 4) {
+        visibleDigits += ' ';
+      } else if (i < 8) {
+        visibleDigits += '*';
+      } else if (i === 8 ) {
+        visibleDigits += ' ';
+      } else if (i < 12) {
+        visibleDigits += '*';
       } else {
-        if ((i + 1) % 5 === 0) {
-          spanElements[i].textContent = ''; // Ensure every fifth character remains an empty space
-        } else {
-          spanElements[i].textContent = '#';
+        visibleDigits += formattedInput[i];
+      }
+    }
+  
+    const spanElements = cardNumberLabel.querySelectorAll('.card-item__numberItem');
+    for (let i = 0; i < spanElements.length; i++) {
+      if (i < visibleDigits.length) {
+        if (spanElements[i].textContent !== visibleDigits[i]) {
+          animateTextChange(spanElements[i], visibleDigits[i]);
+          spanElements[i].textContent = visibleDigits[i];
         }
+      } else {
+        spanElements[i].textContent = '#';
       }
     }
   };
+  
+  
+
   function maskMiddleDigits(inputDigits) {
     let maskedInput = '';
     maskedInput += inputDigits.substring(0, 4);
@@ -80,18 +149,18 @@ document.addEventListener('DOMContentLoaded', () => {
     maskedInput = maskedInput.replace(/(.{4})/g, '$1 ').trim();
     return maskedInput;
   }
-
+  
   
   const updateCardHolder = () => {
     const cardHolderValue = cardHolderInput.value;
     const cardHolder = document.querySelector('.card-item__name');
     cardHolder.textContent = cardHolderValue || "Full Name"
-    // if (cardHolderValue) {
-    //   cardHolder.textContent = cardHolderValue;
-    //   animateTextChange(cardHolder);
-    // } else {
-    //   cardHolder.textContent = 'Full Name';
-    // }
+    if (cardHolderValue) {
+      cardHolder.textContent = cardHolderValue;
+      animateTextChange(cardHolder);
+    } else {
+      cardHolder.textContent = 'Full Name';
+    }
   };
   
   function animateTextChange(element) {
@@ -194,41 +263,6 @@ const updateCvvBand = () => {
 }
 
 cardCvv.addEventListener("input", updateCvvBand);
-
-let imageSources = [
-  'img/visa.png',
-  'img/amex.png',
-  'img/mastercard.png',
-];
-
-let currentImageIndex = 0;
-let cardTypeImg = document.getElementById('cardTypeImg');
-
-
-cardTypeImg.src = imageSources[currentImageIndex];
-
-const cardNumberInput = document.getElementById('cardNumber');
-cardNumberInput.addEventListener('input', () => {
-  const firstDigit = cardNumberInput.value.charAt(0);
-
-  switch (firstDigit) {
-    case '3':
-      currentImageIndex = 1; 
-      break;
-    case '4':
-      currentImageIndex = 0; 
-      break;
-    case '5':
-      currentImageIndex = 2; 
-      break;
-    default:
-      
-      currentImageIndex = 0;
-  }
-
-  
-  cardTypeImg.src = imageSources[currentImageIndex];
-});
 
 document.getElementById('cardNumber').addEventListener('input', (e) => {
   let inputValue = e.target.value;
