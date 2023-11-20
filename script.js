@@ -188,8 +188,7 @@ document.getElementById('cardNumber').addEventListener('input', (e) => {
 });
 
 const formatCardNumber = (value) => {
-  let formattedValue = value.replac
-  e(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
+  let formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
   return formattedValue ;
 }
 
