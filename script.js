@@ -5,13 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardYearInput = document.getElementById('cardYear');
   const cardCvvInput = document.getElementById('cardCvv');
   const cardDate = document.getElementById('cardDate');
-  const cardNumberLabel = document.getElementById('cardNumberLabel');
-  const cardCvvBand = document.querySelector('.card-item__cvvBand');
   const cardItem = document.getElementById('cardItem');
   const submitButton = document.querySelector('.card-form__button');
   const cardItemBack = document.querySelector('.card-item__side.-back');
   const cardTypeImgBack = cardItemBack.querySelector('.card-item__typeImg');
-  const cardTypeImg = document.querySelector('.card-item__typeImg');
   const cardItemNumber = document.querySelector('#Numbers');
   const cardItemInfo = document.querySelector('.card-item__info');
   const cardItemData = document.querySelector('.card-item__date');
@@ -20,7 +17,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   cardNumberInput.addEventListener('input', () => {updateCardNumberLabel();});
+  cardHolderInput.addEventListener('input', () => {updateCardHolder();});
+  cardMonthInput.addEventListener('input', () => {updateCardDate();});
 
+  cardYearInput.addEventListener('input', () => {updateCardDate();});
+  cardCvvInput.addEventListener('input', () => {updateCvvBand();});
+  cardNumberInp.addEventListener('input', () => updateCardNumberLabel());
+  cardCvv.addEventListener('input', () => {rotateCardBack(cardCvv.value);});
+
+  cardMonthInput.addEventListener('input', () => {updateCardDate();});
+
+  
+  cardNumberInput.addEventListener('input', () => {updateCardNumberLabel();});
   cardHolderInput.addEventListener('input', () => {updateCardHolder();});
   cardMonthInput.addEventListener('input', () => {updateCardDate();});
   cardMonthInput.addEventListener('input', () => {updateCardDate();});
@@ -37,16 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
   cardNumberYear.addEventListener('blur', () => {cardItemData.classList.remove('bordered');});
 
 
-  cardYearInput.addEventListener('input', () => {updateCardDate();});
-  cardCvvInput.addEventListener('input', () => {updateCvvBand();});
-  submitButton.addEventListener('click', () => {toggleCardSide();});
 
-  
-  cardNumberInp.addEventListener('input', () => updateCardNumberLabel());
+  submitButton.addEventListener('click', () => {toggleCardSide();});
   
   const updateCardNumberLabel = () => {
-      let cardNumberLabel = document.getElementById('cardNumberLabel');
-      let cardNumberItems = cardNumberLabel.getElementsByClassName('card-item__numberItem');
+      const cardNumberLabel = document.getElementById('cardNumberLabel');
+      const cardNumberItems = cardNumberLabel.getElementsByClassName('card-item__numberItem');
   
       let inputText = cardNumberInp.value;
       let inputDigits = inputText.replace(/\D/g, ''); 
@@ -79,37 +83,23 @@ const updateCardDate = () => {
   const cardDateItem = cardDate.querySelector('.card-item__dateItem span');
 
   if (isValidMonth || isValidYear) {
-    if (isValidMonth && isValidYear) {
-      cardDateItem.textContent = `${monthValue} ${yearValue}`;
-      deleteYY.textContent = '';
-    } else if (isValidMonth) {
-      cardDateItem.textContent = monthValue;
-      deleteYY.textContent = 'YY';
-    } else if (isValidYear) {
-      cardDateItem.textContent = yearValue;
-      deleteYY.textContent = 'MM';
-    }
-  } else {
-    console.log('Invalid date input');
-  }
+    cardDateItem.textContent = isValidMonth && isValidYear ? `${monthValue} ${yearValue}` : isValidMonth ? monthValue : yearValue;
+    deleteYY.textContent = isValidMonth && isValidYear ? '' : isValidMonth ? 'YY' : 'MM';
+  } else console.log('Invalid date input');
 };
 
-    const updateCardTypeBack = () => {
-      cardTypeImgBack.src = "img/amex.png";
-    };
+const updateCvvBandBack = () => {
+  const cvvValue = cardCvvInput.value;
+  const cvvBand = cardItemBack.querySelector('.card-item__cvvBand');
+  cvvBand.textContent = cvvValue;
+};
 
-  const updateCvvBandBack = () => {
-    const cvvValue = cardCvvInput.value;
-    const cvvBand = cardItemBack.querySelector('.card-item__cvvBand');
-    cvvBand.textContent = cvvValue;
-  };
-
-  const toggleCardSide = () => {
-    cardItem.classList.toggle('card-item__side--front');
-    cardItem.classList.toggle('card-item__side--back');
-    updateCardTypeBack(); 
-    updateCvvBandBack(); 
-  };
+const toggleCardSide = () => {
+  cardItem.classList.toggle('card-item__side--front');
+  cardItem.classList.toggle('card-item__side--back');
+  updateCardTypeBack(); 
+  updateCvvBandBack(); 
+};
 });
 
 const cardBack = document.getElementById('cardBack');
@@ -139,9 +129,6 @@ const rotateCardBack = (cvv) => {
   });
 }
 
-cardCvv.addEventListener('input', () => {
-  rotateCardBack(cardCvv.value);
-});
 
 cardCvv.addEventListener("blur", () => {
   cardBack.style.transform = 'perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg)';
@@ -154,12 +141,9 @@ cardCvv.addEventListener("focus", () => {
 })
 
 const updateCvvBand = () => {
-  const cvvInput = cardCvv.value;
-
-  const maskedCvv = cvvInput.replace(/./g, '*');
-
+  const cvvInput = cardCvv.value.replace(/./g, '*');
   const cvvBandText = document.getElementById("cvvBandValue");
-  cvvBandText.textContent = maskedCvv;
+  cvvBandText.textContent = cvvInput;
 }
 
 cardCvv.addEventListener("input", updateCvvBand);
@@ -191,12 +175,13 @@ document.getElementById('cardNumber').addEventListener('input', (e) => {
     e.target.value = numericValue;
   }
   
-  let formattedValue = formatCardNumber(numericValue);
+  const formattedValue = formatCardNumber(numericValue);
   e.target.value = formattedValue;
 });
 
 const formatCardNumber = (value) => {
-  let formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
+  let formattedValue = value.replac
+  e(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
   return formattedValue ;
 }
 
@@ -216,9 +201,8 @@ document.addEventListener("DOMContentLoaded", () => {
     cardItemName.innerText = sanitizedContent || "Full Name";
   });
 });
-
-  
-  cardCvvInput.addEventListener("input", (event) => {
+ 
+    cardCvvInput.addEventListener("input", (event) => {
 
     let inputValue = event.target.value;
     inputValue = inputValue.replace(/[^0-9]/g, '');
@@ -227,4 +211,4 @@ document.addEventListener("DOMContentLoaded", () => {
       inputValue = inputValue.slice(0, 4);
     }
     cardCvvInput.value = inputValue;
-});  
+});
