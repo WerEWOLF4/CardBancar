@@ -218,13 +218,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
   
-  cardCvvInput.addEventListener("input", (event) => {
+const cardCvvInput = document.getElementById("cardCvv");
 
+cardCvvInput.addEventListener("input", (event) => {
     let inputValue = event.target.value;
     inputValue = inputValue.replace(/[^0-9]/g, '');
-
-    if (inputValue.length > 4) {
-      inputValue = inputValue.slice(0, 4);
-    }
     cardCvvInput.value = inputValue;
-});  
+});
