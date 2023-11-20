@@ -126,7 +126,7 @@ const rotateCardBack = (cvv) => {
   const cardMonthInput = document.getElementById('cardMonth');
   const cardYearInput = document.getElementById('cardYear');
 
-  [cardNumberInput, cardHolderInput, cardMonthInput, cardYearInput].forEach(inputField => {
+  [cardCvv].forEach(inputField => {
     inputField.addEventListener('input', () => {
     
       const hasInput = [cardCvv]
