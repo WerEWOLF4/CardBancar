@@ -16,18 +16,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardItemInfo = document.querySelector('.card-item__info');
   const cardItemData = document.querySelector('.card-item__date');
   const cardNumberInp = document.getElementById('cardNumber');
+  const cardNumberYear = document.getElementById('cardYear');
+
 
   cardNumberInput.addEventListener('input', () => {updateCardNumberLabel();});
 
   cardHolderInput.addEventListener('input', () => {updateCardHolder();});
   cardMonthInput.addEventListener('input', () => {updateCardDate();});
+  cardMonthInput.addEventListener('input', () => {updateCardDate();});
+
 
   cardNumberInput.addEventListener('focus', () => {cardItemNumber.classList.add('bordered');});
   cardHolderInput.addEventListener('focus', () => {cardItemInfo.classList.add('bordered');});
   cardMonthInput.addEventListener('focus', () => {cardItemData.classList.add('bordered');});
+  cardNumberYear.addEventListener('focus', () => {cardItemData.classList.add('bordered');});
+
   cardNumberInput.addEventListener('blur', () => {cardItemNumber.classList.remove('bordered');});
   cardHolderInput.addEventListener('blur', () => {cardItemInfo.classList.remove('bordered');});
   cardMonthInput.addEventListener('blur', () => {cardItemData.classList.remove('bordered');});
+  cardNumberYear.addEventListener('blur', () => {cardItemData.classList.remove('bordered');});
+
 
   cardYearInput.addEventListener('input', () => {updateCardDate();});
   cardCvvInput.addEventListener('input', () => {updateCvvBand();});
