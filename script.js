@@ -141,9 +141,10 @@ cardCvv.addEventListener("focus", () => {
 })
 
 const updateCvvBand = () => {
-  const cvvInput = cardCvv.value.replace(/./g, '*');
+  const cvvInput = cardCvv.value;
+  const maskedCvv = cvvInput.replace(/./g, '*');
   const cvvBandText = document.getElementById("cvvBandValue");
-  cvvBandText.textContent = cvvInput;
+  cvvBandText.textContent = maskedCvv;
 }
 
 cardCvv.addEventListener("input", updateCvvBand);
