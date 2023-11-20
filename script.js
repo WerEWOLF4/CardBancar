@@ -4,14 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardMonthInput = document.getElementById('cardMonth');
   const cardYearInput = document.getElementById('cardYear');
   const cardCvvInput = document.getElementById('cardCvv');
-  const cardDate = document.getElementById('cardDate');
   const cardNumberLabel = document.getElementById('cardNumberLabel');
-  const cardCvvBand = document.querySelector('.card-item__cvvBand');
   const cardItem = document.getElementById('cardItem');
   const submitButton = document.querySelector('.card-form__button');
   const cardItemBack = document.querySelector('.card-item__side.-back');
   const cardTypeImgBack = cardItemBack.querySelector('.card-item__typeImg');
-  const cardTypeImg = document.querySelector('.card-item__typeImg');
   const cardItemNumber = document.querySelector('#Numbers');
   const cardItemInfo = document.querySelector('.card-item__info');
   const cardItemData = document.querySelector('.card-item__date');
@@ -228,7 +225,6 @@ document.getElementById('cardNumber').addEventListener('input', (e) => {
   let numericValue = inputValue.replace(/\D/g, '');
 
   if (inputValue !== numericValue) {
-   
     e.target.value = numericValue;
   }
   
@@ -238,7 +234,7 @@ document.getElementById('cardNumber').addEventListener('input', (e) => {
 
 const formatCardNumber = (value) => {
   let formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
-  return formattedValue ;
+  return formattedValue;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -257,7 +253,6 @@ document.addEventListener("DOMContentLoaded", () => {
     cardItemName.innerText = sanitizedContent || "Full Name";
   });
 });
-
   
 const cardCvvInput = document.getElementById("cardCvv");
 
