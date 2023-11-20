@@ -42,38 +42,30 @@ document.addEventListener('DOMContentLoaded', () => {
   cardNumberInp.addEventListener('input', () => updateCardNumberLabel());
   
 const updateCardNumberLabel = () => {
-  let inputText = cardNumberInp.value;
-  let inputDigits = inputText.replace(/\D/g, '');
-  let formattedText = formatCardNumber(inputDigits);
+  const inputText = cardNumberInp.value.replace(/\D/g, '');
+  const formattedText = formatCardNumber(inputText);
 
- 
   const spanElements = cardNumberLabel.querySelectorAll('.card-item__numberItem');
+
   for (let i = 0; i < spanElements.length; i++) {
     if (i < formattedText.length) {
-        if (spanElements[i].textContent !== formattedText[i]) {
-            animateTextChange(spanElements[i], formattedText[i]);
-            spanElements[i].textContent = formattedText[i];
-        }
+      const charToShow = (i === 4 || i === 9) ? ' ' : (i > 4 && i < 12) ? '*' : formattedText[i];
+      if (spanElements[i].textContent !== charToShow) {
+        animateTextChange(spanElements[i], charToShow);
+        spanElements[i].textContent = charToShow;
+      }
     } else {
-        if ((i + 1) % 5 === 0) {
-            spanElements[i].textContent = ''; // Ensure every fifth character remains an empty space
-        } else {
-            spanElements[i].textContent = '#';
-        }
+      spanElements[i].textContent = (i + 1) % 5 === 0 ? '' : '#';
     }
-}
+  }
 
   const newText = inputText.slice(previousText.length);
-
-
   appendWithAnimation(newText);
-
-
   previousText = inputText;
 };
 
-function formatCardNumber(inputDigits) {
 
+function formatCardNumber(inputDigits) {
   let formattedText = inputDigits.replace(/\s+/g, '').replace(/(.{4})/g, '$1 ').trim();
   return formattedText;
 }
@@ -176,9 +168,7 @@ cardCvv.addEventListener("focus", () => {
 
 const updateCvvBand = () => {
   const cvvInput = cardCvv.value;
-
   const maskedCvv = cvvInput.replace(/./g, '*');
-
   const cvvBandText = document.getElementById("cvvBandValue");
   cvvBandText.textContent = maskedCvv;
 }
