@@ -44,26 +44,50 @@ document.addEventListener('DOMContentLoaded', () => {
   
   cardNumberInp.addEventListener('input', () => updateCardNumberLabel());
   
-  const updateCardNumberLabel = () => {
-      let cardNumberLabel = document.getElementById('cardNumberLabel');
-      let cardNumberItems = cardNumberLabel.getElementsByClassName('card-item__numberItem');
-  
-      let inputText = cardNumberInp.value;
-      let inputDigits = inputText.replace(/\D/g, ''); 
-  
-      for (let i = 0; i < cardNumberItems.length; i++) {
-          if (i % 5 === 4) {
-              cardNumberItems[i].textContent = ''; 
-          } else {
-              if (i >= 4 && i <= 13) {
-                  cardNumberItems[i].textContent = inputDigits[i - Math.floor(i / 5)] ? '*' : '#'; 
-              } else {
-                  cardNumberItems[i].textContent = inputDigits[i - Math.floor(i / 5)] || '#';
-              }
-          }
-      }
-  };
+const updateCardNumberLabel = () => {
+  let inputText = cardNumberInp.value;
+  let inputDigits = inputText.replace(/\D/g, '');
+  let formattedText = formatCardNumber(inputDigits);
 
+ 
+  const spanElements = cardNumberLabel.querySelectorAll('.card-item__numberItem');
+  for (let i = 0; i < spanElements.length; i++) {
+    if (i < formattedText.length) {
+        if (spanElements[i].textContent !== formattedText[i]) {
+            animateTextChange(spanElements[i], formattedText[i]);
+            spanElements[i].textContent = formattedText[i];
+        }
+    } else {
+        if ((i + 1) % 5 === 0) {
+            spanElements[i].textContent = ''; // Ensure every fifth character remains an empty space
+        } else {
+            spanElements[i].textContent = '#';
+        }
+    }
+}
+
+  const newText = inputText.slice(previousText.length);
+
+
+  appendWithAnimation(newText);
+
+
+  previousText = inputText;
+};
+
+function formatCardNumber(inputDigits) {
+
+  let formattedText = inputDigits.replace(/\s+/g, '').replace(/(.{4})/g, '$1 ').trim();
+  return formattedText;
+}
+
+function animateTextChange(element, newText) {
+
+  element.classList.add('text-change-animation');
+  setTimeout(() => {
+      element.classList.remove('text-change-animation');
+  }, 500); 
+}
 const updateCardHolder = () => {
   const cardHolderValue = cardHolderInput.value;
   const cardHolder = document.querySelector('.card-item__name');

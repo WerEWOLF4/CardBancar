@@ -429,3 +429,20 @@ input[type="text" i] {
 .Item{
   height: 75px;
 }
+
+.text-change-animation {
+  display: inline-block;
+  opacity: 0;
+  animation: appearFromTop 0.5s forwards;
+}
+
+@keyframes appearFromTop {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
