@@ -115,7 +115,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const cardHolderValue = cardHolderInput.value;
     const cardHolder = document.querySelector('.card-item__name');
     cardHolder.textContent = cardHolderValue || "Full Name"
-
+    // if (cardHolderValue) {
+    //   cardHolder.textContent = cardHolderValue;
+    //   animateTextChange(cardHolder);
+    // } else {
+    //   cardHolder.textContent = 'Full Name';
+    // }
   };
   
   function animateTextChange(element) {
@@ -258,34 +263,19 @@ document.getElementById('cardNumber').addEventListener('input', (e) => {
   let inputValue = e.target.value;
   let numericValue = inputValue.replace(/\D/g, '');
 
- 
-  if (numericValue.startsWith('3')) {
-    numericValue = numericValue.slice(0, 15);
+  if (inputValue !== numericValue) {
+   
+    e.target.value = numericValue;
   }
-
   
-  if (numericValue.startsWith('3')) {
-   
-    let formattedValue = formatAmexCardNumberInstant(numericValue);
-    e.target.value = formattedValue;
-  } else {
-   
-    let formattedValue = formatDefaultCardNumberInstant(numericValue);
-    e.target.value = formattedValue;
-  }
+  let formattedValue = formatCardNumber(numericValue);
+  e.target.value = formattedValue;
 });
 
-const formatAmexCardNumberInstant = (value) => {
-
-  let formattedValue = value.replace(/^(\d{4})(\d{6})?(\d{0,5})?$/, '$1 $2 $3').trim();
-  return formattedValue;
-};
-
-const formatDefaultCardNumberInstant = (value) => {
-  // Format as default (e.g., Visa) in real-time
+const formatCardNumber = (value) => {
   let formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
-  return formattedValue;
-};
+  return formattedValue ;
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   
