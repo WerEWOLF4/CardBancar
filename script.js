@@ -44,11 +44,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
   cardNumberInp.addEventListener('input', () => updateCardNumberLabel());
-   const updateCardNumberLabel = () => {
-    let inputText = cardNumberInp.value;
+
+
+  const updateCardNumberLabel = () => {
+    let inputText = cardNumberInput.value;
     let inputDigits = inputText.replace(/\D/g, '');
   
-    const maskedInput = maskMiddleDigits(inputDigits);
+    let maskedInput;
+    if (inputDigits.startsWith('3')) {
+      maskedInput = maskAmexFormat(inputDigits); // Use Amex format masking
+    } else {
+      maskedInput = maskMiddleDigits(inputDigits);
+    }
   
     const spanElements = cardNumberLabel.querySelectorAll('.card-item__numberItem');
     for (let i = 0; i < spanElements.length; i++) {
@@ -66,6 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   };
+  const maskAmexFormat = (inputDigits) => {
+    const firstFour = inputDigits.substring(0, 4);
+    const middleSix = inputDigits.substring(4, 10).replace(/\d/g, '*');
+    const lastFive = inputDigits.substring(10);
+    return `${firstFour}  ${middleSix}  ${lastFive}`;
+  };
+  
   function maskMiddleDigits(inputDigits) {
     let maskedInput = '';
     maskedInput += inputDigits.substring(0, 4);
