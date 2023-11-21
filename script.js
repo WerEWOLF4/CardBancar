@@ -263,19 +263,34 @@ document.getElementById('cardNumber').addEventListener('input', (e) => {
   let inputValue = e.target.value;
   let numericValue = inputValue.replace(/\D/g, '');
 
-  if (inputValue !== numericValue) {
-   
-    e.target.value = numericValue;
+  // Limit the length for American Express cards
+  if (numericValue.startsWith('3')) {
+    numericValue = numericValue.slice(0, 15);
   }
-  
-  let formattedValue = formatCardNumber(numericValue);
-  e.target.value = formattedValue;
+
+  // Check if the card number starts with "3" (American Express)
+  if (numericValue.startsWith('3')) {
+    // Format as 4-6-5 in real-time
+    let formattedValue = formatAmexCardNumberInstant(numericValue);
+    e.target.value = formattedValue;
+  } else {
+    // Format as default (e.g., Visa) in real-time
+    let formattedValue = formatDefaultCardNumberInstant(numericValue);
+    e.target.value = formattedValue;
+  }
 });
 
-const formatCardNumber = (value) => {
+const formatAmexCardNumberInstant = (value) => {
+  // Format as 4-6-5 in real-time
+  let formattedValue = value.replace(/^(\d{4})(\d{6})?(\d{0,5})?$/, '$1 $2 $3').trim();
+  return formattedValue;
+};
+
+const formatDefaultCardNumberInstant = (value) => {
+  // Format as default (e.g., Visa) in real-time
   let formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
-  return formattedValue ;
-}
+  return formattedValue;
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   
