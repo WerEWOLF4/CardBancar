@@ -115,12 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cardHolderValue = cardHolderInput.value;
     const cardHolder = document.querySelector('.card-item__name');
     cardHolder.textContent = cardHolderValue || "Full Name"
-    // if (cardHolderValue) {
-    //   cardHolder.textContent = cardHolderValue;
-    //   animateTextChange(cardHolder);
-    // } else {
-    //   cardHolder.textContent = 'Full Name';
-    // }
+
   };
   
   function animateTextChange(element) {
@@ -263,25 +258,25 @@ document.getElementById('cardNumber').addEventListener('input', (e) => {
   let inputValue = e.target.value;
   let numericValue = inputValue.replace(/\D/g, '');
 
-  // Limit the length for American Express cards
+ 
   if (numericValue.startsWith('3')) {
     numericValue = numericValue.slice(0, 15);
   }
 
-  // Check if the card number starts with "3" (American Express)
+  
   if (numericValue.startsWith('3')) {
-    // Format as 4-6-5 in real-time
+   
     let formattedValue = formatAmexCardNumberInstant(numericValue);
     e.target.value = formattedValue;
   } else {
-    // Format as default (e.g., Visa) in real-time
+   
     let formattedValue = formatDefaultCardNumberInstant(numericValue);
     e.target.value = formattedValue;
   }
 });
 
 const formatAmexCardNumberInstant = (value) => {
-  // Format as 4-6-5 in real-time
+
   let formattedValue = value.replace(/^(\d{4})(\d{6})?(\d{0,5})?$/, '$1 $2 $3').trim();
   return formattedValue;
 };
