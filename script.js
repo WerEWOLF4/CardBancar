@@ -204,31 +204,29 @@ let imageSources = [
 let currentImageIndex = 0;
 let cardTypeImg = document.getElementById('cardTypeImg');
 
-
 cardTypeImg.src = imageSources[currentImageIndex];
 
 const cardNumberInput = document.getElementById('cardNumber');
 cardNumberInput.addEventListener('input', () => {
-  const firstDigit = cardNumberInput.value.charAt(0);
+  const firstDigit = cardNumberInput.value.match(/^\d/);
 
-  switch (firstDigit) {
+  switch (firstDigit ? firstDigit[0] : '') {
     case '3':
-      currentImageIndex = 1; 
+      currentImageIndex = 1;
       break;
     case '4':
-      currentImageIndex = 0; 
+      currentImageIndex = 0;
       break;
     case '5':
-      currentImageIndex = 2; 
+      currentImageIndex = 2;
       break;
     default:
-      
       currentImageIndex = 0;
   }
 
-  
   cardTypeImg.src = imageSources[currentImageIndex];
 });
+
 
 document.getElementById('cardNumber').addEventListener('input', (e) => {
   let inputValue = e.target.value;
