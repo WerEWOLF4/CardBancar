@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardNumberInp = document.getElementById('cardNumber');
   const cardNumberYear = document.getElementById('cardYear');
 
+
+
   cardNumberInput.addEventListener('input', () => {updateCardNumberLabel();});
 
   cardHolderInput.addEventListener('input', () => {updateCardHolder();});
@@ -43,80 +45,90 @@ document.addEventListener('DOMContentLoaded', () => {
   
   cardNumberInp.addEventListener('input', () => updateCardNumberLabel());
 
-let amexElementRemoved = false;
 
-const updateCardNumberLabel = () => {
+  const updateCardNumberLabel = () => {
     let inputText = cardNumberInput.value;
     let inputDigits = inputText.replace(/\D/g, '');
-
+  
     let maskedInput;
     if (inputDigits.startsWith('3')) {
-        if (!amexElementRemoved) {
-            const american = document.querySelector('.american');
-            if (american) {
-                american.remove();
-                amexElementRemoved = true;
-            }
-        }
-        maskedInput = maskAmexFormat(inputDigits);
+      maskedInput = maskAmexFormat(inputDigits); // Use Amex format masking
     } else {
-        inputDigits = inputDigits.slice(0, 16);
-        maskedInput = maskMiddleDigits(inputDigits);
+      maskedInput = maskMiddleDigits(inputDigits);
     }
-
+  
     const spanElements = cardNumberLabel.querySelectorAll('.card-item__numberItem');
     for (let i = 0; i < spanElements.length; i++) {
-        if (i < maskedInput.length) {
-            if (spanElements[i].textContent !== maskedInput[i]) {
-                animateTextChange(spanElements[i], maskedInput[i]);
-                spanElements[i].textContent = maskedInput[i];
-            }
-        } else {
-            if ((i + 1) % 5 === 0) {
-                spanElements[i].textContent = '';
-            } else {
-                spanElements[i].textContent = '#';
-            }
+      if (i < maskedInput.length) {
+        if (spanElements[i].textContent !== maskedInput[i]) {
+          animateTextChange(spanElements[i], maskedInput[i]);
+          spanElements[i].textContent = maskedInput[i];
         }
+      } else {
+        if ((i + 1) % 5 === 0) {
+          spanElements[i].textContent = ''; // Ensure every fifth character remains an empty space
+        } else {
+          spanElements[i].textContent = '#';
+        }
+      }
     }
-};
+  };
+  const maskAmexFormat = (inputDigits) => {
+    const firstFour1 = inputDigits.substring(0, 1) ||`#`; 
+    const firstFour2 = inputDigits.substring(1, 2) ||`#`; 
+    const firstFour3 = inputDigits.substring(2, 3) ||`#`; 
+    const firstFour4 = inputDigits.substring(3, 4) ||`#`; 
 
+    const middleSix1 = inputDigits.substring(4, 5).replace(/\d/g, '*') || `#`;
+    const middleSix2 = inputDigits.substring(5, 6).replace(/\d/g, '*') || `#`;
+    const middleSix3 = inputDigits.substring(7, 8).replace(/\d/g, '*') || `#`;
+    const middleSix4 = inputDigits.substring(8, 9).replace(/\d/g, '*') || `#`;
+    const middleSix5 = inputDigits.substring(9, 10).replace(/\d/g, '*') || `#`;
+    const middleSix6 = inputDigits.substring(10, 11).replace(/\d/g, '*') || `#`;
 
-const maskAmexFormat = (inputDigits) => {
-    let formattedInput = inputDigits.slice(0, 15); // Limit to 15 digits
-    formattedInput = formattedInput.replace(/(.{4})/g, '$1 '); // Add spaces every 4 digits
-    return formattedInput;
-};
-
-
-function maskMiddleDigits(inputDigits) {
+    const lastFive1 = inputDigits.substring(11, 12) || `#`;
+    const lastFive2 = inputDigits.substring(12, 13) || `#`;
+    const lastFive3 = inputDigits.substring(13, 14) || `#`;
+    const lastFive4 = inputDigits.substring(14, 15) || `#`;
+    const lastFive5 = inputDigits.substring(15, 16) || `#`;
+  
+    return `${firstFour1}${firstFour2}${firstFour3}${firstFour4}  ${middleSix1}${middleSix2}${middleSix3}${middleSix4}${middleSix5}${middleSix6}  ${lastFive1}${lastFive2}${lastFive3}${lastFive4}${lastFive5}`;
+  };
+  
+  function maskMiddleDigits(inputDigits) {
     let maskedInput = '';
     maskedInput += inputDigits.substring(0, 4);
     for (let i = 4; i < 12; i++) {
-        if (inputDigits[i]) {
-            maskedInput += '*';
-        } else {
-            break;
-        }
+      if (inputDigits[i]) {
+        maskedInput += '*';
+      } else {
+        break;
+      }
     }
     maskedInput += inputDigits.substring(12);
     maskedInput = maskedInput.replace(/(.{4})/g, '$1 ').trim();
     return maskedInput;
-}
-
-const updateCardHolder = () => {
-    const cardHolderValue = cardHolderInput.value;
-    const cardHolder = document.querySelector('.card-item__name');
-    cardHolder.textContent = cardHolderValue || 'Full Name';
-};
+  }
 
   
-function animateTextChange(element) {
-  element.classList.add('text-change-animation');
-  setTimeout(() => {
-    element.classList.remove('text-change-animation');
-  }, 500);
-}
+  const updateCardHolder = () => {
+    const cardHolderValue = cardHolderInput.value;
+    const cardHolder = document.querySelector('.card-item__name');
+    cardHolder.textContent = cardHolderValue || "Full Name"
+    // if (cardHolderValue) {
+    //   cardHolder.textContent = cardHolderValue;
+    //   animateTextChange(cardHolder);
+    // } else {
+    //   cardHolder.textContent = 'Full Name';
+    // }
+  };
+  
+  function animateTextChange(element) {
+    element.classList.add('text-change-animation');
+    setTimeout(() => {
+      element.classList.remove('text-change-animation');
+    }, 500);
+  }
   
 const cardMonthSelect = document.getElementById("cardMonth");
 const cardYearSelect = document.getElementById("cardYear");
@@ -262,7 +274,7 @@ document.getElementById('cardNumber').addEventListener('input', (e) => {
 
 const formatCardNumber = (value) => {
   let formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
-  return formattedValue;
+  return formattedValue ;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -281,6 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cardItemName.innerText = sanitizedContent || "Full Name";
   });
 });
+
   
 const cardCvvInput = document.getElementById("cardCvv");
 
