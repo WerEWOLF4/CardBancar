@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   cardNumberInput.addEventListener('input', () => {updateCardNumberLabel();});
-
   cardHolderInput.addEventListener('input', () => {updateCardHolder();});
   cardMonthInput.addEventListener('input', () => {updateCardDate();});
   cardYearInput.addEventListener('input', () => {updateCardDate();});
@@ -129,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cardHolder.textContent = cardHolderValue || "Full Name"
   };
   
-  function animateTextChange(element) {
+  const animateTextChange = (element) =>{
     element.classList.add('text-change-animation');
     setTimeout(() => {
       element.classList.remove('text-change-animation');
@@ -160,7 +159,6 @@ function updateCardDate() {
   }
 }
 
-// Add event listeners to update the card date when the selects change
 cardMonthSelect.addEventListener("change", updateCardDate);
 cardYearSelect.addEventListener("change", updateCardDate);
 
@@ -186,7 +184,7 @@ const cardBack = document.getElementById('cardBack');
 const cardCvv = document.getElementById('cardCvv');
 const cardFront = document.getElementById("card-item__side__front");
 
-const rotateCardBack = (cvv) => {
+const rotateCardBack = () => {
 
   [cardCvv].forEach(inputField => {
     inputField.addEventListener('input', () => {
