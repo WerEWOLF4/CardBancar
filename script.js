@@ -315,6 +315,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+const detectCardType = () => {
+  let cardNumberInput = document.getElementById('cardNumber');
+  let firstDigit = cardNumberInput.value.charAt(0);
+  let cardTypeImage = document.getElementById("backImage");
+
+  if (firstDigit === '3') {
+      cardTypeImage.src = 'img/amex.png';
+  } else {
+      cardTypeImage.src = 'img/mastercard.png';
+  }
+}
+
+
+document.getElementById('cardNumber').addEventListener('input', detectCardType);
   
 const cardCvvInput = document.getElementById("cardCvv");
 
