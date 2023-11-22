@@ -81,16 +81,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const middleSix1 = inputDigits.substring(4, 5).replace(/\d/g, '*') || `#`;
     const middleSix2 = inputDigits.substring(5, 6).replace(/\d/g, '*') || `#`;
-    const middleSix3 = inputDigits.substring(7, 8).replace(/\d/g, '*') || `#`;
-    const middleSix4 = inputDigits.substring(8, 9).replace(/\d/g, '*') || `#`;
-    const middleSix5 = inputDigits.substring(9, 10).replace(/\d/g, '*') || `#`;
-    const middleSix6 = inputDigits.substring(10, 11).replace(/\d/g, '*') || `#`;
+    const middleSix3 = inputDigits.substring(6, 7).replace(/\d/g, '*') || `#`;
+    const middleSix4 = inputDigits.substring(7, 8).replace(/\d/g, '*') || `#`;
+    const middleSix5 = inputDigits.substring(8, 9).replace(/\d/g, '*') || `#`;
+    const middleSix6 = inputDigits.substring(9, 10).replace(/\d/g, '*') || `#`;
 
-    const lastFive1 = inputDigits.substring(11, 12) || `#`;
-    const lastFive2 = inputDigits.substring(12, 13) || `#`;
-    const lastFive3 = inputDigits.substring(13, 14) || `#`;
-    const lastFive4 = inputDigits.substring(14, 15) || `#`;
-    const lastFive5 = inputDigits.substring(15, 16) || `#`;
+    const lastFive1 = inputDigits.substring(10, 11) || `#`;
+    const lastFive2 = inputDigits.substring(11, 12) || `#`;
+    const lastFive3 = inputDigits.substring(12, 13) || `#`;
+    const lastFive4 = inputDigits.substring(13, 14) || `#`;
+    const lastFive5 = inputDigits.substring(14, 15) || `#`;
   
     return `${firstFour1}${firstFour2}${firstFour3}${firstFour4}  ${middleSix1}${middleSix2}${middleSix3}${middleSix4}${middleSix5}${middleSix6}  ${lastFive1}${lastFive2}${lastFive3}${lastFive4}${lastFive5}`;
   };
@@ -271,7 +271,7 @@ document.getElementById('cardNumber').addEventListener('input', (e) => {
 
  
   if (numericValue.startsWith('3')) {
-    numericValue = numericValue.substring(0, 16);
+    numericValue = numericValue.substring(0, 15);
   }
 
  
@@ -288,7 +288,7 @@ document.getElementById('cardNumber').addEventListener('input', (e) => {
 
 const formatAmexCardNumberInstant = (value) => {
   
-  let formattedValue = value.replace(/^(\d{4})(\d{6})?(\d{0,6})?$/, '$1 $2 $3').trim();
+  let formattedValue = value.replace(/^(\d{4})(\d{6})?(\d{0,5})?$/, '$1 $2 $3').trim();
   return formattedValue;
 };
 
