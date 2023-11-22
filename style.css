@@ -446,3 +446,7 @@ input[type="text" i] {
     opacity: 1;
   }
 }
+
+#cardTypeImg {
+  transition: opacity 0.5s ease-in-out;
+}

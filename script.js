@@ -238,7 +238,7 @@ let imageSources = [
 
 let currentImageIndex = 0;
 let cardTypeImg = document.getElementById('cardTypeImg');
-
+let isFirstDigitIntroduced = false;
 
 cardTypeImg.src = imageSources[currentImageIndex];
 
@@ -246,23 +246,44 @@ const cardNumberInput = document.getElementById('cardNumber');
 cardNumberInput.addEventListener('input', () => {
   const firstDigit = cardNumberInput.value.charAt(0);
 
-  switch (firstDigit) {
-    case '3':
-      currentImageIndex = 1; 
-      break;
-    case '4':
-      currentImageIndex = 0; 
-      break;
-    case '5':
-      currentImageIndex = 2; 
-      break;
-    default:
-      
-      currentImageIndex = 0;
-  }
+  if (!isFirstDigitIntroduced && firstDigit) {
+      let newIndex;
 
-  
-  cardTypeImg.src = imageSources[currentImageIndex];
+      switch (firstDigit) {
+          case '3':
+              newIndex = 1;
+              break;
+          case '4':
+              newIndex = 0;
+              break;
+          case '5':
+              newIndex = 2;
+              break;
+          default:
+              newIndex = 0;
+      }
+
+      if (newIndex !== currentImageIndex) {
+          cardTypeImg.style.opacity = 0;
+          setTimeout(() => {
+              cardTypeImg.src = imageSources[newIndex];
+              cardTypeImg.style.opacity = 1;
+              currentImageIndex = newIndex;
+              isFirstDigitIntroduced = true;
+          }, 500); 
+      }
+  } else if (!firstDigit) {
+   
+      if (currentImageIndex !== 0) {
+          cardTypeImg.style.opacity = 0;
+          setTimeout(() => {
+              cardTypeImg.src = imageSources[0];
+              cardTypeImg.style.opacity = 1;
+              currentImageIndex = 0;
+              isFirstDigitIntroduced = false;
+          }, 500);
+      }
+  }
 });
 
 document.getElementById('cardNumber').addEventListener('input', (e) => {
@@ -337,3 +358,4 @@ cardCvvInput.addEventListener("input", (event) => {
     inputValue = inputValue.replace(/[^0-9]/g, '');
     cardCvvInput.value = inputValue;
 });
+
