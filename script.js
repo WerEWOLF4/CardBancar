@@ -73,52 +73,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
   const maskAmexFormat = (inputDigits) => {
-    const firstFour1 = inputDigits.substring(0, 1) ||`#`; 
-    const firstFour2 = inputDigits.substring(1, 2) ||`#`; 
-    const firstFour3 = inputDigits.substring(2, 3) ||`#`; 
-    const firstFour4 = inputDigits.substring(3, 4) ||`#`; 
+    const chunks = [
+        [0, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9],
+        [10, 11, 12, 13, 14]
+    ];
 
-    const middleSix1 = inputDigits.substring(4, 5).replace(/\d/g, '*') || `#`;
-    const middleSix2 = inputDigits.substring(5, 6).replace(/\d/g, '*') || `#`;
-    const middleSix3 = inputDigits.substring(6, 7).replace(/\d/g, '*') || `#`;
-    const middleSix4 = inputDigits.substring(7, 8).replace(/\d/g, '*') || `#`;
-    const middleSix5 = inputDigits.substring(8, 9).replace(/\d/g, '*') || `#`;
-    const middleSix6 = inputDigits.substring(9, 10).replace(/\d/g, '*') || `#`;
+    const maskedChunks = chunks.map(indices => {
+        const chunk = indices.map(index => inputDigits.charAt(index).replace(/\d/g, '*') || '#').join('');
+        return chunk;
+    });
 
-    const lastFive1 = inputDigits.substring(10, 11) || `#`;
-    const lastFive2 = inputDigits.substring(11, 12) || `#`;
-    const lastFive3 = inputDigits.substring(12, 13) || `#`;
-    const lastFive4 = inputDigits.substring(13, 14) || `#`;
-    const lastFive5 = inputDigits.substring(14, 15) || `#`;
+    return maskedChunks.join('  ');
+};
   
-    return `${firstFour1}${firstFour2}${firstFour3}${firstFour4}  ${middleSix1}${middleSix2}${middleSix3}${middleSix4}${middleSix5}${middleSix6}  ${lastFive1}${lastFive2}${lastFive3}${lastFive4}${lastFive5}`;
-  };
-  
-  const maskMiddleDigits = (inputDigits) => {
-    const firstFour1 = inputDigits.substring(0, 1) ||`#`; 
-     const firstFour2 = inputDigits.substring(1, 2) ||`#`; 
-     const firstFour3 = inputDigits.substring(2, 3) ||`#`; 
-     const firstFour4 = inputDigits.substring(3, 4) ||`#`; 
-  
-     const middleSix1 = inputDigits.substring(4, 5).replace(/\d/g, '*') || `#`;
-     const middleSix2 = inputDigits.substring(5, 6).replace(/\d/g, '*') || `#`;
-     const middleSix3 = inputDigits.substring(6, 7).replace(/\d/g, '*') || `#`;
-     const middleSix4 = inputDigits.substring(7, 8).replace(/\d/g, '*') || `#`;
-  
-     const middleSix5 = inputDigits.substring(8, 9).replace(/\d/g, '*') || `#`;
-     const middleSix6 = inputDigits.substring(9, 10).replace(/\d/g, '*') || `#`;
-     const middleSix7 = inputDigits.substring(10, 11).replace(/\d/g, '*') || `#`;
-     const middleSix8 = inputDigits.substring(11, 12).replace(/\d/g, '*') || `#`;
-  
-     const lastFive1 = inputDigits.substring(12, 13) || `#`;
-     const lastFive2 = inputDigits.substring(13, 14) || `#`;
-     const lastFive3 = inputDigits.substring(14, 15) || `#`;
-     const lastFive4 = inputDigits.substring(15, 16) || `#`;
-  
-   
-     return `${firstFour1}${firstFour2}${firstFour3}${firstFour4} ${middleSix1}${middleSix2}${middleSix3}${middleSix4} ${middleSix5}${middleSix6}${middleSix7}${middleSix8} ${lastFive1}${lastFive2}${lastFive3}${lastFive4}`;
-     
-   }
+const maskMiddleDigits = (inputDigits) => {
+  let maskedString = "";
+  for (let i = 0; i < 4; i++) {
+      maskedString += inputDigits.charAt(i) || '#';
+  }
+  maskedString += " ";
+  for (let i = 4; i < 8; i++) {
+      maskedString += inputDigits.charAt(i).replace(/\d/g, '*') || '#';
+  }
+  maskedString += " ";
+  for (let i = 8; i < 12; i++) {
+      maskedString += inputDigits.charAt(i).replace(/\d/g, '*') || '#';
+  }
+  maskedString += " ";
+  for (let i = 12; i < 16; i++) {
+      maskedString += inputDigits.charAt(i) || '#';
+  }
+  return maskedString;
+};
   
 
   
