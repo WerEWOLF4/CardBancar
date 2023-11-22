@@ -73,19 +73,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
   const maskAmexFormat = (inputDigits) => {
-    const chunks = [
+    const indices = [
         [0, 1, 2, 3],
         [4, 5, 6, 7, 8, 9],
         [10, 11, 12, 13, 14]
     ];
 
-    const maskedChunks = chunks.map(indices => {
-        const chunk = indices.map(index => inputDigits.charAt(index).replace(/\d/g, '*') || '#').join('');
-        return chunk;
+    const maskedChunks = indices.map(indicesSet => {
+        return indicesSet.map(index => {
+            if (index >= 4 && index <= 9) {
+                return inputDigits.charAt(index).replace(/\d/g, '*') || '#';
+            } else {
+                return inputDigits.charAt(index) || '#';
+            }
+        }).join('');
     });
 
     return maskedChunks.join('  ');
 };
+
   
 const maskMiddleDigits = (inputDigits) => {
   let maskedString = "";
