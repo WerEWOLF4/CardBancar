@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     let maskedInput;
     if (inputDigits.startsWith('3')) {
-      maskedInput = maskAmexFormat(inputDigits); // Use Amex format masking
+      maskedInput = maskAmexFormat(inputDigits); 
     } else {
       maskedInput = maskMiddleDigits(inputDigits);
     }
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } else {
         if ((i + 1) % 5 === 0) {
-          spanElements[i].textContent = ''; // Ensure every fifth character remains an empty space
+          spanElements[i].textContent = ''; 
         } else {
           spanElements[i].textContent = '#';
         }
@@ -127,12 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const cardHolderValue = cardHolderInput.value;
     const cardHolder = document.querySelector('.card-item__name');
     cardHolder.textContent = cardHolderValue || "Full Name"
-    // if (cardHolderValue) {
-    //   cardHolder.textContent = cardHolderValue;
-    //   animateTextChange(cardHolder);
-    // } else {
-    //   cardHolder.textContent = 'Full Name';
-    // }
   };
   
   function animateTextChange(element) {
@@ -275,19 +269,34 @@ document.getElementById('cardNumber').addEventListener('input', (e) => {
   let inputValue = e.target.value;
   let numericValue = inputValue.replace(/\D/g, '');
 
-  if (inputValue !== numericValue) {
-   
-    e.target.value = numericValue;
+ 
+  if (numericValue.startsWith('3')) {
+    numericValue = numericValue.substring(0, 16);
   }
-  
-  let formattedValue = formatCardNumber(numericValue);
-  e.target.value = formattedValue;
+
+ 
+  if (numericValue.startsWith('3')) {
+   
+    let formattedValue = formatAmexCardNumberInstant(numericValue);
+    e.target.value = formattedValue;
+  } else {
+   
+    let formattedValue = formatDefaultCardNumberInstant(numericValue);
+    e.target.value = formattedValue;
+  }
 });
 
-const formatCardNumber = (value) => {
+const formatAmexCardNumberInstant = (value) => {
+  
+  let formattedValue = value.replace(/^(\d{4})(\d{6})?(\d{0,6})?$/, '$1 $2 $3').trim();
+  return formattedValue;
+};
+
+const formatDefaultCardNumberInstant = (value) => {
+  
   let formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
-  return formattedValue ;
-}
+  return formattedValue;
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   
