@@ -121,32 +121,21 @@ const maskMiddleDigits = (inputDigits) => {
     }, 500);
   }
   
-const cardMonthSelect = document.getElementById("cardMonth");
-const cardYearSelect = document.getElementById("cardYear");
-const cardDateItemMM = document.querySelector('.card-item__dateItem .deleteMM');
-const cardDateItemYY = document.querySelector('.card-item__dateItem .deleteYY');
-
-function updateCardDate() {
-  const selectedMonth = cardMonthSelect.value;
-  const selectedYear = cardYearSelect.value.slice(-2);
-
-  if (selectedMonth && selectedYear) {
+  const cardMonthSelect = document.getElementById("cardMonth");
+  const cardYearSelect = document.getElementById("cardYear");
+  const cardDateItemMM = document.querySelector('.card-item__dateItem .deleteMM');
+  const cardDateItemYY = document.querySelector('.card-item__dateItem .deleteYY');
+  
+  const updateCardDate = () => {
+    const selectedMonth = cardMonthSelect.value || 'MM';
+    const selectedYear = (cardYearSelect.value || '').slice(-2);
+  
     cardDateItemMM.textContent = selectedMonth;
-    cardDateItemYY.textContent = selectedYear;
-  } else if (selectedMonth) {
-    cardDateItemMM.textContent = selectedMonth;
-    cardDateItemYY.textContent = 'YY';
-  } else if (selectedYear) {
-    cardDateItemMM.textContent = 'MM';
-    cardDateItemYY.textContent = selectedYear;
-  } else {
-    cardDateItemMM.textContent = 'MM';
-    cardDateItemYY.textContent = 'YY';
+    cardDateItemYY.textContent = selectedYear || 'YY';
   }
-}
-
-cardMonthSelect.addEventListener("change", updateCardDate);
-cardYearSelect.addEventListener("change", updateCardDate);
+  
+  cardMonthSelect.addEventListener("change", updateCardDate);
+  cardYearSelect.addEventListener("change", updateCardDate);
 
     const updateCardTypeBack = () => {
       cardTypeImgBack.src = "img/amex.png";
