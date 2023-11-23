@@ -91,21 +91,18 @@ document.addEventListener('DOMContentLoaded', () => {
   
 const maskMiddleDigits = (inputDigits) => {
   let maskedString = "";
-  for (let i = 0; i < 4; i++) {
-      maskedString += inputDigits.charAt(i) || '#';
+
+  for (let i = 0; i < inputDigits.length; i += 4) {
+    const chunk = inputDigits.slice(i, i + 4);
+    maskedString += (i === 4 || i === 8) ?
+      chunk.replace(/\d/g, '*') || '#' :
+      chunk || '#';
+
+    if (i < inputDigits.length - 4) {
+      maskedString += " ";
+    }
   }
-  maskedString += " ";
-  for (let i = 4; i < 8; i++) {
-      maskedString += inputDigits.charAt(i).replace(/\d/g, '*') || '#';
-  }
-  maskedString += " ";
-  for (let i = 8; i < 12; i++) {
-      maskedString += inputDigits.charAt(i).replace(/\d/g, '*') || '#';
-  }
-  maskedString += " ";
-  for (let i = 12; i < 16; i++) {
-      maskedString += inputDigits.charAt(i) || '#';
-  }
+
   return maskedString;
 };
   
