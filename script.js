@@ -73,7 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
   const maskAmexFormat = (inputDigits) => {
-    const indices = [Array.from({ length: 4 }).fill(0).map((_, j) => j), Array.from({ length: 6 }).fill(0).map((_, j) => j + 4), Array.from({ length: 5 }).fill(0).map((_, j) => j + 10)];
+    const indices = [
+      new Array(4).fill(0).map((_, j) => j),
+      new Array(6).fill(0).map((_, j) => j + 4),
+      new Array(5).fill(0).map((_, j) => j + 10)
+    ];
 
     const maskedChunks = indices.map(indicesSet => {
         return indicesSet.map(index => {
